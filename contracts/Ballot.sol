@@ -4,7 +4,7 @@ contract Election {
     uint public votersCount = 0;
     uint public candidatesCount= 0;
     address public manager;
-    
+        
 
 
     struct Candidate{
@@ -26,6 +26,8 @@ contract Election {
     event VotedEvent(
         uint indexed candidateId    
     );
+
+    Candidate public winner;
 
     constructor() public {
         manager = msg.sender;
@@ -81,6 +83,7 @@ contract Election {
                 maxIndex = i;
             }    
         
+        winner = candidates[maxIndex];
 
         }   
     }
