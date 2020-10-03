@@ -5,8 +5,6 @@ contract Election {
     uint public candidatesCount= 0;
     address public manager;
         
-
-
     struct Candidate{
         uint id;
         string name;
@@ -23,16 +21,14 @@ contract Election {
     mapping(address => Voter) public voters;
     //mapping(address => bool) public voterExists;
     uint public candidateId;
-    event VotedEvent(
-        uint indexed candidateId    
-    );
+   // event VotedEvent(
+   //     uint indexed candidateId    
+   // );
 
     Candidate public winner;
 
     constructor() public {
         manager = msg.sender;
-
-
     }
 
     
@@ -53,26 +49,27 @@ contract Election {
         candidates[candidatesCount] =  newCandidate;
     }
 
-    function addVoter(uint _id, string memory _name) public restricted{
+    function addVoter(uint _id, string memory _name, address _address) public restricted{
         Voter memory newVoter = Voter({
             exists : false,
+            voted: false,
             name: _name,
-            id: _id,
-            voted: false
+            id: _id
+           
         });
 
         votersCount++;
-        voters[msg.sender] = newVoter;
-        voters[msg.sender].exists = true;
+        voters[_address] = newVoter;
+        voters[_address].exists = true;
     }
 
     function vote(uint _candidateId) public {
         require(voters[msg.sender].exists);
         require(voters[msg.sender].voted == false);
+
         voters[msg.sender].voted = true;
         candidates[_candidateId].voteCount++;
 
-        emit VotedEvent(_candidateId);
     }
 
     
