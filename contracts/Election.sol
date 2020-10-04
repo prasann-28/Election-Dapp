@@ -17,27 +17,27 @@ contract Election {
         string name;
         bool voted;
     }
+    //mapping is key => value pairs 
     mapping(uint => Candidate) public candidates;
     mapping(address => Voter) public voters;
-    //mapping(address => bool) public voterExists;
-    uint public candidateId;
-   // event VotedEvent(
-   //     uint indexed candidateId    
-   // );
-
+    
+    //uint public candidateId;
+   
     Candidate public winner;
-
+    
+    //sets deployer of contract as its manager
     constructor() public {
         manager = msg.sender;
     }
 
     
-    
+    //restricts action to manager if used otherwise causes error
     modifier restricted(){
         require(msg.sender == manager);
         _;
     }
 
+    //manager adds candidates with default values
     function addCandidate(uint _id, string memory _name) public restricted{
         Candidate memory newCandidate = Candidate({
             name: _name,
@@ -48,7 +48,8 @@ contract Election {
         candidatesCount++;
         candidates[candidatesCount] =  newCandidate;
     }
-
+    
+    //manager adds voters with default values
     function addVoter(uint _id, string memory _name, address _address) public restricted{
         Voter memory newVoter = Voter({
             exists : false,
@@ -63,6 +64,7 @@ contract Election {
         voters[_address].exists = true;
     }
 
+    //Voters can vote only once
     function vote(uint _candidateId) public {
         require(voters[msg.sender].exists);
         require(voters[msg.sender].voted == false);
@@ -72,7 +74,7 @@ contract Election {
 
     }
 
-    
+    //manager declares the winner
     function finalizeResult() public restricted {
         uint maxIndex = 0;
         for (uint i = 1; i < candidatesCount; i++) {

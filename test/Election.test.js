@@ -7,7 +7,6 @@ contract('Election', () => {
 
     beforeEach(async () => {
      accounts = await web3.eth.getAccounts()
-     //console.log(accounts)
      election = await Election.deployed({from: accounts[0]})
     });
 
