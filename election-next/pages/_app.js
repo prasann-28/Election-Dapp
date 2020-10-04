@@ -7,7 +7,7 @@ import '../styles/globals.css'
 
 class App extends Component {
 
-  async componentWillMount() {
+  async componentDidMount() {
     await this.loadWeb3()
     await this.loadBlockchainData()
   }
@@ -24,16 +24,14 @@ class App extends Component {
     const electionData = Election.networks[networkId];
     if(electionData){
       
-      const Election = new web3.eth.Contract(Election.abi, electionData.address);
-      this.setState({Election});
+      const election = new web3.eth.Contract(Election.abi, electionData.address);
+      this.setState({election});
       
-      let manager = await Election.methods.manager().call();
-      let voters = await Election.methods.voters().call({from: this.state.account});
-      let candidates = await Election.methods.candidates().call({from: this.state.account});
-      let votersCount = await Election.methods.votersCount().call()
-      let candidatesCount = await Election.methods.candidatesCount().call()
-      let winner = await Election.methods.winner().call()
-      this.setState({manager, voters, candidates, votersCount, candidatesCount, winner})
+      let manager = await election.methods.manager().call();
+      let votersCount = await election.methods.votersCount().call()
+      let candidatesCount = await election.methods.candidatesCount().call()
+      let winner = await election.methods.winner().call()
+      this.setState({manager, votersCount, candidatesCount, winner})
       //this.setState({})
   } else {
     window.alert('Not deployed to network');
@@ -61,10 +59,9 @@ class App extends Component {
     this.state = {
       Election: {},
       manager: '',
-      voters: [],
-      candidates: [], 
+      //voters: [],
+      //candidates: [], 
       loading: true,
-      account: '0x0',
       votersCount: '',
       candidatesCount: '',
       winner: ''
@@ -77,7 +74,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>Hello world</div>
+    <div>Hello world. This is {this.state.manager}. I am {this.state.account}</div>
     )
   }
 }
