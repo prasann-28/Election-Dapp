@@ -1,7 +1,9 @@
+import Head from 'next/head'
+import styles from '../styles/Home.module.css'
 import React, { Component } from 'react'
 import Web3 from 'web3'
-import Election from '../abis/Election.json'
-//import Navbar from './Navbar'
+import Election from '../abis/Election'
+//import Navbar from '../public/Navbar'
 //import Main from './Main'
 import '../styles/globals.css'
 
@@ -17,6 +19,7 @@ class App extends Component {
 
     const accounts = await web3.eth.getAccounts();
     this.setState({ account: accounts[0] });
+    console.log(await web3.eth.getAccounts())
     const networkId = await web3.eth.net.getId();
     
     
@@ -38,7 +41,7 @@ class App extends Component {
   }
   this.setState({loading: false});
 
-}
+ }
 
   
   async loadWeb3() {
@@ -58,25 +61,15 @@ class App extends Component {
     super(props)
     this.state = {
       Election: {},
-      manager: '',
-      //voters: [],
-      //candidates: [], 
+      manager: '', 
       loading: true,
       votersCount: '',
+      account: '',
       candidatesCount: '',
       winner: ''
 
     }
   }
 
-  
-  
-
-  render() {
-    return (
-    <div>Hello world. This is {this.state.manager}. I am {this.state.account}</div>
-    )
-  }
-}
-
+};
 export default App;
