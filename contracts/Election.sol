@@ -1,5 +1,15 @@
 pragma solidity 0.5.16;
 
+// contract ElectionFactory{
+//     address[] public deployedElections;
+//     function createElection() public {
+//         address newElection = address( new Election(msg.sender));
+//         deployedElections.push(newElection);
+//     }
+//     function getDeployedElections() public view returns (address[] memory){
+//         return deployedElections;
+//     } 
+// }
 contract Election {
     uint public votersCount = 0;
     uint public candidatesCount= 0;
@@ -16,6 +26,8 @@ contract Election {
         uint id;
         string name;
         bool voted;
+        string password;
+        bool authenticated;
     }
     //mapping is key => value pairs 
     mapping(uint => Candidate) public candidates;
@@ -26,7 +38,9 @@ contract Election {
     Candidate public winner;
     
     //sets deployer of contract as its manager
+    //constructor(address _manager) public {
     constructor() public {
+    
         manager = msg.sender;
     }
 
@@ -55,7 +69,9 @@ contract Election {
             exists : false,
             voted: false,
             name: _name,
-            id: _id
+            id: _id,
+            password: 'dfault',
+            authenticated: false
            
         });
 
@@ -64,14 +80,34 @@ contract Election {
         voters[_address].exists = true;
     }
 
+    function setVoterPassword(string memory _pass) public {
+        require(voters[msg.sender].id!=0);
+        require(voters[msg.sender].exists);
+        require(!voters[msg.sender].authenticated);
+        require((keccak256(abi.encodePacked(voters[msg.sender].password)) == keccak256(abi.encodePacked('dfault'))));
+
+        voters[msg.sender].password = _pass;
+    }
+
     //Voters can vote only once
     function vote(uint _candidateId) public {
         require(voters[msg.sender].exists);
+        require(voters[msg.sender].authenticated);
         require(voters[msg.sender].voted == false);
 
         voters[msg.sender].voted = true;
         candidates[_candidateId].voteCount++;
 
+    }
+    //Voter authentication
+    function authenticate(uint _id,string memory _pass) public {
+        require(voters[msg.sender].exists);
+        require(!voters[msg.sender].voted);
+        require((keccak256(abi.encodePacked(voters[msg.sender].password)) == keccak256(abi.encodePacked(_pass))));
+        require(voters[msg.sender].id == _id);
+
+        //(keccak256(abi.encodePacked(voters[msg.sender].password)) == keccak256(abi.encodePacked(_pass)));
+        voters[msg.sender].authenticated = true;
     }
 
     //manager declares the winner

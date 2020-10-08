@@ -1,4 +1,4 @@
-//
+//////
 const Election = artifacts.require('./Election')
 
 contract('Election', () => {
@@ -44,6 +44,7 @@ contract('Election', () => {
         const candidate2 = await election.candidates(2)
         const candidate3 = await election.candidates(3)
 
+       // assert.equal(voter1.name, 'Prakash')
         assert.equal(voter2.name, 'A')
         assert.equal(voter3.name, 'B')
 
@@ -52,9 +53,40 @@ contract('Election', () => {
                 
     })
 
+     it('lets voters set passwords', async () =>{
+        await election.addVoter(1, 'A',accounts[1], {from: accounts[0]})
+        await election.setVoterPassword('Password',{from: accounts[1]})
+        
+        const voter1 = await election.voters(accounts[1])
+        
+        assert.equal(voter1.password, 'Password') 
+    })  
+    
+    it('authenticates users', async () =>{
+        await election.addVoter(1, 'A',accounts[1], {from: accounts[0]})
+        await election.setVoterPassword('Password',{from: accounts[1]})
+        await election.authenticate(1,'Password',{from: accounts[1]})
+
+        const voter1 = await election.voters(accounts[1])
+        
+        assert(voter1.authenticated) 
+    })  
+        
     it('voters can vote', async() => {
         
-        await election.vote('2',{from: accounts[1]})
+        await election.addVoter(1, 'A',accounts[1], {from: accounts[0]})
+        await election.setVoterPassword('Password1',{from: accounts[1]})
+        await election.authenticate(1,'Password1',{from: accounts[1]})
+
+        await election.addVoter(2, 'B',accounts[2], {from: accounts[0]})
+        await election.setVoterPassword('Password2',{from: accounts[2]})
+        await election.authenticate(2,'Password2',{from: accounts[2]})
+
+        await election.addVoter(3, 'A',accounts[3], {from: accounts[0]})
+        await election.setVoterPassword('Password3',{from: accounts[3]})
+        await election.authenticate(3,'Password3',{from: accounts[3]})
+
+        await election.vote('1',{from: accounts[1]})
         await election.vote('1',{from: accounts[2]})
         await election.vote('2',{from: accounts[3]})
         
@@ -70,8 +102,8 @@ contract('Election', () => {
         assert(voter3.voted)
         assert(voter2.voted)
 
-        assert.equal(candidate1.voteCount, '1')
-        assert.equal(candidate2.voteCount, '2')
+        assert.equal(candidate1.voteCount, '2')
+        assert.equal(candidate2.voteCount, '1')
         assert.equal(candidate3.voteCount, '0')
         
         
@@ -81,7 +113,7 @@ contract('Election', () => {
         await election.finalizeResult({from: accounts[0]})
         
         let winner = await election.winner()
-        assert.equal(winner.name, 'NM')
+        assert.equal(winner.name, 'RG')
     })
 
     describe('Permissions Check', () => {
@@ -120,3 +152,4 @@ contract('Election', () => {
     })
 
 } )
+
