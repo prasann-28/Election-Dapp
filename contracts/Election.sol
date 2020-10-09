@@ -80,10 +80,12 @@ contract Election {
         voters[_address].exists = true;
     }
 
+    //lets voters set passwords
     function setVoterPassword(string memory _pass) public {
         require(voters[msg.sender].id!=0);
         require(voters[msg.sender].exists);
         require(!voters[msg.sender].authenticated);
+        //to check strings
         require((keccak256(abi.encodePacked(voters[msg.sender].password)) == keccak256(abi.encodePacked('dfault'))));
 
         voters[msg.sender].password = _pass;
