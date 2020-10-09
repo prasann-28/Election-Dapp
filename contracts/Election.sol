@@ -72,7 +72,7 @@ contract Election {
             id: _id,
             password: 'dfault',
             authenticated: false
-           
+ 
         });
 
         votersCount++;
@@ -112,7 +112,7 @@ contract Election {
         voters[msg.sender].authenticated = true;
     }
 
-    //manager declares the winner
+    //only manager declares the winner
     function finalizeResult() public restricted {
         uint maxIndex = 0;
         for (uint i = 1; i < candidatesCount; i++) {
