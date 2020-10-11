@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Web3 from 'web3'
-import Link from 'next/link'
+//import Link from 'next/link'
 
 export default function Login(){
    

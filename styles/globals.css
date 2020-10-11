@@ -1,16 +1,17 @@
 html,
 header{
   padding: 0rem auto;
-  margin: 10rem auto;
+  margin: 5% auto;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  color:aqua;
+  background-color: papayawhip;
 }
 body {
-  padding: 0;
-  margin: 0;
+  padding: auto;
+  margin: auto;
   font-family: 'Courier New', Courier, monospace;
   color: black;
-  background-color: brown;
+  background-color:grey;
+  text-align: center;
 }
 
 a {
@@ -19,5 +20,5 @@ a {
 }
 
 * {
-  box-sizing: border-box;
+ background-image: url(https://d30i16bbj53pdg.cloudfront.net/wp-content/uploads/2018/10/vote-for-blog-800x491.jpg);
 }
