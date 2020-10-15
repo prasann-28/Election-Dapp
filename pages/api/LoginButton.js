@@ -5,9 +5,9 @@ import 'semantic-ui-css/semantic.min.css';
 
 
 const LoginButton = () => (
-  <div>
+  <div >
     <Button animated='fade'>
-      <Button.Content visible >Login</Button.Content>
+      <Button.Content visible className='intro-button' >Login</Button.Content>
       <Button.Content hidden>
       <Link href='../login'>
         <Icon name='arrow right' />
@@ -15,7 +15,7 @@ const LoginButton = () => (
       </Button.Content>
     </Button>
     <Button animated='fade'>
-      <Button.Content visible>Register your account</Button.Content>
+      <Button.Content visible className='intro-button' >Register your account</Button.Content>
       <Button.Content hidden>
       <Link href='../register'><Icon name='chevron circle right' /></Link>
       </Button.Content>

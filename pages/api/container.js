@@ -5,7 +5,7 @@ import { Container, Header, Segment } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 
 const ContainerExampleText = () => (
- <Segment basic > <Container text>
+ <Segment basic > <Container text className='intro-container'>
     <p>
       Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
       ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et
