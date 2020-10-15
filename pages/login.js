@@ -1,26 +1,15 @@
 import Head from 'next/head'
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import Web3 from 'web3'
 import Link from 'next/link'
 import Election from '../build/contracts/Election.json'
-import { Button, Form, Segment } from 'semantic-ui-react'
+import { Button, Form, Segment, Input } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-
-const LoginForm = () => (
-  <Form unstackable>
-    <Form.Group widths={2}>
-      <Form.Input label='Identity Number' placeholder='Enter your ID' />
-      <Form.Input label='Enter Password' placeholder='Password' type='password' />
-    </Form.Group>
-    <Form.Checkbox label='I agree to the Terms and Conditions' />
-    <Button type='submit'>Submit</Button>
-  </Form>
-)
-
+import 'next/router'
+import { render } from 'react-dom'
 
 export default class Login extends Component {
-    async componentWillMount() {
+    async componentDidMount() {
       await this.loadWeb3()
         await this.loadBlockchainData()
       }
@@ -71,11 +60,31 @@ export default class Login extends Component {
           loading: true,
           account: '0x0',
           winner: '',
+          id:''
           
         }
       }
 
-       
+       onSubmit = async (event) => {
+        event.preventDefault()
+        
+        try{
+          await this.state.election.methods.authenticate(this.state.id, this.state.password).send({from: this.state.account})
+        }
+        // let status = await this.state.election.methods.voters(this.state.account).authenticated.call({from: this.state.account})
+        
+        // if(status){
+
+          // } else{
+        //   window.alert('Wrong Password')
+        // }
+        catch (err) {
+          window.alert('Wrong id/password')
+          window.location.href = "./register"
+        }
+        
+        window.location.href('./voter/voting')
+       };
       
       render() {
         return (
@@ -83,10 +92,16 @@ export default class Login extends Component {
           <Head><title>Login Page</title></Head>
           <Segment basic inverted padded='very' raised size='massive'>
             <h1><b>Login here to continue Voting</b></h1></Segment>
-          <body>
-          <LoginForm className='LoginForm'/>
-          </body>        
+          
+          <Form unstackable className='LoginForm' onSubmit={this.onSubmit} >
+          <Form.Group widths={2}>
+          <Form.Input label='Identity Number' placeholder='Enter your ID' value={this.state.id} onChange={event => this.setState({id:event.target.value})} required/>
+          <Form.Input label='Enter Password' placeholder='Password' type='password' value={this.state.password} onChange={event => this.setState({id:event.target.password})} required />
+          </Form.Group>
+          <Form.Checkbox label='I agree to the Terms and Conditions' required />
+          <Button type='submit'>Submit</Button>
+          </Form>        
           </>
         );
-      }
+      } 
 }
