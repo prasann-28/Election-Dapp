@@ -1,16 +1,20 @@
 html,
-header{
+Head{
   padding: 0rem auto;
-  margin: 5% auto;
+  margin: 0rem auto;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  background-color: papayawhip;
+   height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-size: cover;
 }
 body {
   padding: auto;
   margin: auto;
   font-family: 'Courier New', Courier, monospace;
   color: black;
-  background-color:grey;
+  background-color:grey; 
   text-align: center;
 }
 
@@ -18,7 +22,10 @@ a {
   color: inherit;
   text-decoration: none;
 }
+ button.ui.button{
+   color: teal;
+ }
 
-* {
- background-image: url(https://d30i16bbj53pdg.cloudfront.net/wp-content/uploads/2018/10/vote-for-blog-800x491.jpg);
+body{
+  background-image: url(../public/431539-PE9O1K-661-1140x684.jpg);
 }

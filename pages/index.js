@@ -1,25 +1,17 @@
-import Head from 'next/head'
-import Link from 'next/link'
-import styles from '../styles/Home.module.css'
 import React from 'react'
-import ReactDOM from 'react-dom'
-
-
-
+import 'semantic-ui-react'
+import LoginButton from './api/LoginButton'
+import ContainerExampleText from './api/container'
+import EHeader from './api/HeaderLogin'
 
 export default function Home() {
   return (
    <>
-   <Head><title>Election</title></Head>
-      <header><h2 className='greeting'>Welcome to the election</h2></header>
-    <body>
-      <div>
-        <h2>Hello there</h2>
-        <Link href='./login'>Click here to login</Link>
-      </div>
-
-    </body>
-   
+    <div className='Home'><EHeader /></div>
+   <div><ContainerExampleText/></div>
+   <br/>
+   <br/><br/>
+   <div><LoginButton/></div>
    </>
   )
 }
