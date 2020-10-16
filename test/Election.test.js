@@ -24,7 +24,7 @@ contract('Election', () => {
     })
 
     it('can register single voter', async () => {
-        await election.addVoter(1, 'Prakash',accounts[1], {from: accounts[0]})
+        await election.register('Prakash',{from: accounts[1]})
         const voter1 = await election.voters(accounts[1])
         assert(voter1.exists)
         assert.equal(voter1.name, 'Prakash')
@@ -32,8 +32,8 @@ contract('Election', () => {
     })
 
     it('can register multiple candidates and voters', async () => {
-        await election.addVoter(2, 'A',accounts[2], {from: accounts[0]})
-        await election.addVoter(3, 'B',accounts[3], {from: accounts[0]})
+        await election.register('A',{from: accounts[2]})
+        await election.register('B',{from: accounts[3]})
 
         await election.addCandidate(2,'NM',{from: accounts[0]})
         await election.addCandidate(3,'AAP',{from: accounts[0]})
@@ -50,11 +50,12 @@ contract('Election', () => {
 
         assert.equal(candidate2.name, 'NM')
         assert.equal(candidate3.name, 'AAP')
-                
+        
+        console.log(voter2.exists)
     })
 
      it('lets voters set passwords', async () =>{
-        await election.addVoter(1, 'A',accounts[1], {from: accounts[0]})
+        //await election.register('A',{from: accounts[1]})
         await election.setVoterPassword('Password',{from: accounts[1]})
         
         const voter1 = await election.voters(accounts[1])
@@ -63,8 +64,8 @@ contract('Election', () => {
     })  
     
     it('authenticates users', async () =>{
-        await election.addVoter(1, 'A',accounts[1], {from: accounts[0]})
-        await election.setVoterPassword('Password',{from: accounts[1]})
+      // await election.register('A',{from: accounts[1]})
+      // await election.setVoterPassword('Password',{from: accounts[1]})
         await election.authenticate(1,'Password',{from: accounts[1]})
 
         const voter1 = await election.voters(accounts[1])
@@ -74,15 +75,15 @@ contract('Election', () => {
         
     it('voters can vote', async() => {
         
-        await election.addVoter(1, 'A',accounts[1], {from: accounts[0]})
-        await election.setVoterPassword('Password1',{from: accounts[1]})
-        await election.authenticate(1,'Password1',{from: accounts[1]})
+      //  await election.register('A',{from: accounts[1]})
+      //  await election.setVoterPassword('Password1',{from: accounts[1]})
+        await election.authenticate(1,'Password',{from: accounts[1]})
 
-        await election.addVoter(2, 'B',accounts[2], {from: accounts[0]})
+        //await election.register('B',{from: accounts[2]})
         await election.setVoterPassword('Password2',{from: accounts[2]})
         await election.authenticate(2,'Password2',{from: accounts[2]})
 
-        await election.addVoter(3, 'A',accounts[3], {from: accounts[0]})
+        //await election.register('A',{from: accounts[3]})
         await election.setVoterPassword('Password3',{from: accounts[3]})
         await election.authenticate(3,'Password3',{from: accounts[3]})
 
@@ -128,15 +129,15 @@ contract('Election', () => {
             }
         })
 
-        it('Only manager can add voters', async () => {
-            try{
-                await election.addVoter(3, 'B',accounts[3], {from: accounts[1]})
-                assert(false)
-            }
-            catch (err){
-                assert(err)
-            }
-        })
+        // it('Only manager can add voters', async () => {
+        //     try{
+        //         await election.register(3, 'B',accounts[3], {from: accounts[1]})
+        //         assert(false)
+        //     }
+        //     catch (err){
+        //         assert(err)
+        //     }
+        // })
 
         it('Only manager can add candidates', async () => {
             try{

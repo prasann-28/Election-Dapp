@@ -1,12 +1,11 @@
 import Head from 'next/head'
 import React, { Component } from 'react'
 import Web3 from 'web3'
-import Link from 'next/link'
 import Election from '../build/contracts/Election.json'
 import { Button, Form, Segment, Input } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import 'next/router'
-import { render } from 'react-dom'
+
 
 export default class Login extends Component {
     async componentDidMount() {
@@ -60,7 +59,8 @@ export default class Login extends Component {
           loading: true,
           account: '0x0',
           winner: '',
-          id:''
+          password: '',
+          id: ''
           
         }
       }
@@ -68,22 +68,25 @@ export default class Login extends Component {
        onSubmit = async (event) => {
         event.preventDefault()
         
-        try{
           await this.state.election.methods.authenticate(this.state.id, this.state.password).send({from: this.state.account})
+          
+          let _id = await this.state.election.methods.voters(this.state.account).call()
+          
+          if(this.state.id == _id.id && this.state.password == _id.password){
+            window.alert("Redirecting")
+            window.location.href = "./voter/voting" 
+          }
+          else{
+          if( _id.exists ){
+            window.alert('Incorrect credentials')
+          }
+          else{
+            window.alert('Register first')
+            window.alert(_id.exists)
+            window.location.href = "./register"
+          }
         }
-        // let status = await this.state.election.methods.voters(this.state.account).authenticated.call({from: this.state.account})
-        
-        // if(status){
-
-          // } else{
-        //   window.alert('Wrong Password')
-        // }
-        catch (err) {
-          window.alert('Wrong id/password')
-          window.location.href = "./register"
-        }
-        
-        window.location.href('./voter/voting')
+          
        };
       
       render() {
@@ -95,12 +98,13 @@ export default class Login extends Component {
           
           <Form unstackable className='LoginForm' onSubmit={this.onSubmit} >
           <Form.Group widths={2}>
-          <Form.Input label='Identity Number' placeholder='Enter your ID' value={this.state.id} onChange={event => this.setState({id:event.target.value})} required/>
-          <Form.Input label='Enter Password' placeholder='Password' type='password' value={this.state.password} onChange={event => this.setState({id:event.target.password})} required />
+          <Form.Input label='Identity Number' placeholder='Enter your ID' value={this.state.id} onChange={event => this.setState({id: event.target.value})} required/>
+          <Form.Input label='Enter Password' placeholder='Password' type='text' value={this.state.password} onChange={event => this.setState({password:event.target.value})} required />
           </Form.Group>
-          <Form.Checkbox label='I agree to the Terms and Conditions' required />
+          <Form.Checkbox label='I agree to the Terms and Conditions' required error />
           <Button type='submit'>Submit</Button>
           </Form>        
+        <h1>{this.state.manager}</h1>
           </>
         );
       } 

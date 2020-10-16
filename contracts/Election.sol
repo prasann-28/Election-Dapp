@@ -64,20 +64,23 @@ contract Election {
     }
     
     //manager adds voters with default values
-    function addVoter(uint _id, string memory _name, address _address) public restricted{
+    function register(string memory _name) public {
+        require(!voters[msg.sender].exists);
+        
         Voter memory newVoter = Voter({
             exists : false,
             voted: false,
             name: _name,
-            id: _id,
+            id: 0,
             password: 'dfault',
             authenticated: false
  
         });
 
         votersCount++;
-        voters[_address] = newVoter;
-        voters[_address].exists = true;
+        voters[msg.sender] = newVoter;
+        voters[msg.sender].id = votersCount;
+        voters[msg.sender].exists = true;
     }
 
     //lets voters set passwords
@@ -91,16 +94,6 @@ contract Election {
         voters[msg.sender].password = _pass;
     }
 
-    //Voters can vote only once
-    function vote(uint _candidateId) public {
-        require(voters[msg.sender].exists);
-        require(voters[msg.sender].authenticated);
-        require(voters[msg.sender].voted == false);
-
-        voters[msg.sender].voted = true;
-        candidates[_candidateId].voteCount++;
-
-    }
     //Voter authentication
     function authenticate(uint _id,string memory _pass) public {
         require(voters[msg.sender].exists);
@@ -110,6 +103,17 @@ contract Election {
 
         //(keccak256(abi.encodePacked(voters[msg.sender].password)) == keccak256(abi.encodePacked(_pass)));
         voters[msg.sender].authenticated = true;
+    }
+
+    //Voters can vote only once
+    function vote(uint _candidateId) public {
+        require(voters[msg.sender].exists);
+        require(voters[msg.sender].authenticated);
+        require(voters[msg.sender].voted == false);
+
+        voters[msg.sender].voted = true;
+        candidates[_candidateId].voteCount++;
+
     }
 
     //only manager declares the winner

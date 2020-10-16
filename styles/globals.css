@@ -35,3 +35,6 @@ a {
   align-self: center;
   
 }
+.register-form.ui.button{
+  color: teal;
+}
