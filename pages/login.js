@@ -67,24 +67,22 @@ export default class Login extends Component {
 
        onSubmit = async (event) => {
         event.preventDefault()
-        
+        try{
+          
           await this.state.election.methods.authenticate(this.state.id, this.state.password).send({from: this.state.account})
-          
-          let _id = await this.state.election.methods.voters(this.state.account).call()
-          
-          if(this.state.id == _id.id && this.state.password == _id.password){
-            window.alert("Redirecting")
-            window.location.href = "./voter/voting" 
-          }
-          else{
-          if( _id.exists ){
-            window.alert('Incorrect credentials')
-          }
-          else{
-            window.alert('Register first')
-            window.alert(_id.exists)
-            window.location.href = "./register"
-          }
+          window.alert("Redirecting")
+          window.location.href = "./voter/voting" 
+        }
+        catch (err) {
+          //window.alert(err)
+           let voterid = await this.state.election.methods.voters(this.state.account).call({from: this.state.account})
+
+           if(voterid.exists){
+             window.alert("Incorrect credentials")
+           } else{
+             window.alert("Register first")
+             window.location.href = "./register"
+           }
         }
           
        };
@@ -105,6 +103,7 @@ export default class Login extends Component {
           <Button type='submit'>Submit</Button>
           </Form>        
         <h1>{this.state.manager}</h1>
+        <h1>{this.state.account}</h1>
           </>
         );
       } 
