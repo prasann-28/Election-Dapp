@@ -8,7 +8,7 @@ import 'next/router'
 
 
 export default class Login extends Component {
-    async componentWillMount() {
+    async componentDidMount() {
       await this.loadWeb3()
         await this.loadBlockchainData()
       }
@@ -26,10 +26,13 @@ export default class Login extends Component {
         if(electionData){
           
           const election = new web3.eth.Contract(Election.abi, electionData.address);
-          this.setState({election});
+          this.setState({election: election});
           
           let manager = await election.methods.manager().call();
-          this.setState({manager})
+          this.setState({manager: manager})
+
+          let voterid = await election.methods.voters(accounts[0]).call();
+          this.setState({voter: voterid})
       } else {
         window.alert('Not deployed to network');
       }
@@ -61,24 +64,21 @@ export default class Login extends Component {
           winner: '',
           password: '',
           id: '',
-          message: ''
+          message: '',
+          voter: ''
           
         }
       }
 
       tokencheck = async () => {
-          if(this.state.account != '0x0')
-          {
-              this.setState({message : 'Please Wait'})
-              let voterstatus = await this.state.election.methods.voters(this.state.account).authenticated.call({from : this.state.account})
-              console.log(voterstatus.id)
+         if(this.state.account != '0x0'){
+          //this.setState({message: 'Checking auth status'})
 
-              if(!voterstatus.authenticated){
-                  this.setState({message: 'Login First'})
-                  window.location.href = "../login"
-              }              
-          }else{
-              window.alert('Welcome to login page')
+           if(this.state.voter.authenticated == false){
+             this.setState({message: 'Login first'})
+            //window.alert("login first")
+            window.location.href = "../login"
+           }
           }
       } 
       
@@ -87,6 +87,7 @@ export default class Login extends Component {
           <>
         <div onLoad={this.tokencheck()}>
         <h2>{this.state.message}</h2>
+        <h1>{this.state.account}</h1>
         </div>
           </>
         );
