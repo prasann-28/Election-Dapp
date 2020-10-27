@@ -1,16 +1,14 @@
 import Head from 'next/head'
 import React, { Component } from 'react'
 import Web3 from 'web3'
-//import Link from 'next/link'
 import Election from '../../build/contracts/Election.json'
-import { Button, Form, Segment, Input, TextArea, Select  } from 'semantic-ui-react'
+import { Button, Form, Segment, Input } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import 'next/router'
-// import Loading from './api/Loading'
-// import { render } from 'react-dom'
+
 
 export default class Login extends Component {
-    async componentDidMount() {
+    async componentWillMount() {
       await this.loadWeb3()
         await this.loadBlockchainData()
       }
@@ -62,33 +60,34 @@ export default class Login extends Component {
           account: '0x0',
           winner: '',
           password: '',
-          id: ''
+          id: '',
+          message: ''
           
         }
       }
 
-       onSubmit = async (event) => {
-          event.preventDefault
-          
-       };
+      tokencheck = async () => {
+          if(this.state.account != '0x0')
+          {
+              this.setState({message : 'Please Wait'})
+              let voterstatus = await this.state.election.methods.voters(this.state.account).authenticated.call({from : this.state.account})
+              console.log(voterstatus.id)
 
-       cookie = async () => {
-            let voter = await this.state.election.methods.voters(this.state.account).call({from: this.state.account})
-
-            if(!voter.authenticated){
-                window.alert("Login to Continue")
-                window.location.href = "../login"
-                
-            }
-       }
-
-
+              if(!voterstatus.authenticated){
+                  this.setState({message: 'Login First'})
+                  window.location.href = "../login"
+              }              
+          }else{
+              window.alert('Welcome to login page')
+          }
+      } 
       
       render() {
         return (
           <>
-           <div onLoad={this.cookie}>{this.state.account}</div>
-        <h2>{this.state.manager}</h2>
+        <div onLoad={this.tokencheck()}>
+        <h2>{this.state.message}</h2>
+        </div>
           </>
         );
       } 
