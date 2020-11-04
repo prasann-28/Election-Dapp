@@ -31,8 +31,12 @@ export default class Admin extends Component {
           let manager = await election.methods.manager().call();
           this.setState({manager: manager})
 
-          let voterid = await election.methods.voters(accounts[0]).call();
-          this.setState({authenticated: voterid.authenticated})
+          // let voterid = await election.methods.voters(accounts[0]).call();
+          // this.setState({authenticated: voterid.authenticated})
+          if(manager != accounts[0]){
+            window.alert('not manager')
+            window.location.href = '../'
+          }
           
       } else {
         window.alert('Not deployed to network');
@@ -68,16 +72,26 @@ export default class Admin extends Component {
         }
       }
 
-      tokenCheck = async () => {
-        if(this.state.account != ''){   
+      // tokenCheck = async () => {
+      //    let managerId = await this.state.election.methods.manager().call({from: this.state.account}) 
+      //    let userId = await web3.eth.getAccounts()
+
+      //    while(userId == ''){
+      //      while(managerId == ''){
+      //        managerId = this.state.manager.toString()
+      //        userId = this.state.manager.toString()
+      //      }
+      //     }
+
+      //     if(userId != managerId){
+      //       window.alert("Not manager")
+      //      // window.location.href = "../"
             
-    }
-} 
       
       render() {
         return (
           <>
-        <div onLoad={this.tokenCheck()}>
+        <div>
         <h2>{this.state.manager}</h2>
         <h1>{this.state.account}</h1>
         </div>

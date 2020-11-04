@@ -33,6 +33,11 @@ export default class Login extends Component {
 
           let voterid = await election.methods.voters(accounts[0]).call();
           this.setState({voter: voterid})
+
+          if(!voterid.authenticated){
+            window.alert("Login first")
+            window.location.href= "../login"
+          }
       } else {
         window.alert('Not deployed to network');
       }
@@ -70,22 +75,22 @@ export default class Login extends Component {
         }
       }
 
-      tokencheck = async () => {
-         if(this.state.account != '0x0'){
-          //this.setState({message: 'Checking auth status'})
+      // tokencheck = async () => {
+      //    if(this.state.account != '0x0'){
+      //     //this.setState({message: 'Checking auth status'})
 
-           if(this.state.voter.authenticated == false){
-             this.setState({message: 'Login first'})
-            //window.alert("login first")
-            window.location.href = "../login"
-           }
-          }
-      } 
+      //      if(this.state.voter.authenticated == false){
+      //        this.setState({message: 'Login first'})
+      //       //window.alert("login first")
+      //       window.location.href = "../login"
+      //      }
+      //     }
+      // } 
       
       render() {
         return (
           <>
-        <div onLoad={this.tokencheck()}>
+        <div>
         <h2>{this.state.message}</h2>
         <h1>{this.state.account}</h1>
         </div>
