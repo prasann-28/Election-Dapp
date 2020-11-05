@@ -33,9 +33,12 @@ export default class Admin extends Component {
 
           // let voterid = await election.methods.voters(accounts[0]).call();
           // this.setState({authenticated: voterid.authenticated})
-          if(manager != accounts[0]){
+          if(manager != accounts[0])
+          {this.setState({head: 'Not your regular page'})
             window.alert('not manager')
             window.location.href = '../'
+          }else{
+            this.setState({head: 'Admin Panel'})  
           }
           
       } else {
@@ -66,8 +69,7 @@ export default class Admin extends Component {
           manager: '', 
           loading: true,
           account: '',
-          message: 'DM',
-          authenticated: false
+          head: 'Admin Panel'
           
         }
       }
@@ -91,6 +93,7 @@ export default class Admin extends Component {
       render() {
         return (
           <>
+          <Head><title>{this.state.head}</title></Head>
         <div>
         <h2>{this.state.manager}</h2>
         <h1>{this.state.account}</h1>

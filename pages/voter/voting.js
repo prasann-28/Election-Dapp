@@ -37,6 +37,8 @@ export default class Login extends Component {
           if(!voterid.authenticated){
             window.alert("Login first")
             window.location.href= "../login"
+          }else{
+            this.setState({head: "Vote Here"})
           }
       } else {
         window.alert('Not deployed to network');
@@ -66,12 +68,8 @@ export default class Login extends Component {
           manager: '', 
           loading: true,
           account: '0x0',
-          winner: '',
-          password: '',
-          id: '',
           message: '',
-          voter: ''
-          
+          head: ''
         }
       }
 
@@ -90,6 +88,7 @@ export default class Login extends Component {
       render() {
         return (
           <>
+          <Head><title>{this.state.head}</title></Head>
         <div>
         <h2>{this.state.message}</h2>
         <h1>{this.state.account}</h1>
