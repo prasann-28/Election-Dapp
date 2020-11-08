@@ -38,3 +38,7 @@ a {
 .register-form.ui.button{
   color: teal;
 }
+.trump{
+  background-image: url(../public/trump.jpg); 
+ align-self: center;
+}

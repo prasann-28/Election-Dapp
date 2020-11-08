@@ -3,8 +3,9 @@ import React, { Component } from 'react'
 import Web3 from 'web3'
 import Election from '../../build/contracts/Election.json'
 import { Button, Form, Segment, Input } from 'semantic-ui-react'
-import 'semantic-ui-css/semantic.min.css'
+
 import 'next/router'
+
 
 
 export default class Admin extends Component {
@@ -94,10 +95,7 @@ export default class Admin extends Component {
         return (
           <>
           <Head><title>{this.state.head}</title></Head>
-        <div>
-        <h2>{this.state.manager}</h2>
-        <h1>{this.state.account}</h1>
-        </div>
+        
           </>
         );
       } 

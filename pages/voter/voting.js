@@ -2,10 +2,11 @@ import Head from 'next/head'
 import React, { Component } from 'react'
 import Web3 from 'web3'
 import Election from '../../build/contracts/Election.json'
-import { Button, Form, Segment, Input } from 'semantic-ui-react'
-import 'semantic-ui-css/semantic.min.css'
-import 'next/router'
+//import { Button, Form, Segment, Input } from 'semantic-ui-react'
 
+import 'next/router'
+import VoteCard from './VoteCard'
+import 'semantic-ui-css/semantic.min.css'
 
 export default class Login extends Component {
     async componentDidMount() {
@@ -69,7 +70,8 @@ export default class Login extends Component {
           loading: true,
           account: '0x0',
           message: '',
-          head: ''
+          head: '',
+          candidateName : 'Donald Trump'
         }
       }
 
@@ -92,6 +94,10 @@ export default class Login extends Component {
         <div>
         <h2>{this.state.message}</h2>
         <h1>{this.state.account}</h1>
+        <div>
+        <VoteCard candidateName={this.state.candidateName} candidateParty ='Republican Party' candidateAgenda = 'Getting revenge on Stone Cold Austin' name = 'trump'
+         ></VoteCard>
+        </div>
         </div>
           </>
         );

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "next": "9.5.4",
+    "next-images": "^1.6.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "semantic-ui-css": "^2.4.1",
