@@ -5,7 +5,7 @@ import Election from '../../build/contracts/Election.json'
 //import { Button, Form, Segment, Input } from 'semantic-ui-react'
 
 import 'next/router'
-import VoteCard from './VoteCard'
+import VoteCard from '../api/VoteCard'
 import 'semantic-ui-css/semantic.min.css'
 
 export default class Login extends Component {

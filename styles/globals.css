@@ -24,6 +24,9 @@ a {
  .intro-button{
    color: teal;
  }
+ .candidateForm-button{
+   color: teal;
+ }
 
 .intro-container.ui.text.container{
    color: inherit;
@@ -38,7 +41,17 @@ a {
 .register-form.ui.button{
   color: teal;
 }
-.trump{
-  background-image: url(../public/trump.jpg); 
- align-self: center;
+.candidate-form{
+
+background-color:inherit;
+float: left;
+padding-left: 20ch;
+padding-right: 20ch;
+padding-top: 2ch;
+padding-bottom: 2ch;
 }
+.button-font{
+  font-size: 20px;
+}
+
+

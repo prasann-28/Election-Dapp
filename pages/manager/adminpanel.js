@@ -2,9 +2,13 @@ import Head from 'next/head'
 import React, { Component } from 'react'
 import Web3 from 'web3'
 import Election from '../../build/contracts/Election.json'
-import { Button, Form, Segment, Input } from 'semantic-ui-react'
+import { Button, Form, Segment, Input, Icon, List, Image } from 'semantic-ui-react'
+import CandidateForm from '../api/CandidateForm'
 
 import 'next/router'
+
+
+
 
 
 
@@ -95,7 +99,26 @@ export default class Admin extends Component {
         return (
           <>
           <Head><title>{this.state.head}</title></Head>
-        
+          <Segment basic inverted padded='very' raised size='huge'>
+            <h1><b>Admin Panel</b></h1>
+            <h3 className='intro-h3'>You can add candidates and declare result</h3>
+            </Segment>
+
+            <div>
+            <div className='candidate-form'>
+            <CandidateForm icon ='chess queen' ></CandidateForm></div>
+            <div className='candidate-form' style={{float : "right"}} >
+            <Button animated='fade' size='huge'>
+      <Button.Content visible >Declare Result</Button.Content>
+      <Button.Content hidden>
+      <Icon name='chess' />
+      </Button.Content>
+    </Button>
+            </div>
+            
+            </div>
+
+           
           </>
         );
       } 
