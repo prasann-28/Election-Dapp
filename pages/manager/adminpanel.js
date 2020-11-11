@@ -2,14 +2,15 @@ import Head from 'next/head'
 import React, { Component } from 'react'
 import Web3 from 'web3'
 import Election from '../../build/contracts/Election.json'
-import { Button, Form, Segment, Input, Icon, List, Image } from 'semantic-ui-react'
-import CandidateForm from '../api/CandidateForm'
-
+import { Button, Form, Segment, Input, Icon, List, Image, Modal, Select } from 'semantic-ui-react'
+import {motion} from 'framer-motion'
 import 'next/router'
-
-
-
-
+import 'semantic-ui-css/semantic.min.css'
+const genderOptions = [
+  { key: 'm', text: 'Male', value: 'male' },
+  { key: 'f', text: 'Female', value: 'female' },
+  { key: 'o', text: 'Other', value: 'other' },
+]
 
 
 export default class Admin extends Component {
@@ -74,39 +75,115 @@ export default class Admin extends Component {
           manager: '', 
           loading: true,
           account: '',
-          head: 'Admin Panel'
-          
+          head: 'Admin Panel',
+          name: '',
+          party: '',
+          open: false,
+          id : ''
         }
       }
 
-      // tokenCheck = async () => {
-      //    let managerId = await this.state.election.methods.manager().call({from: this.state.account}) 
-      //    let userId = await web3.eth.getAccounts()
+      onSubmit = async (event) =>{
+        event.preventDefault()
+         let candidateName = this.state.name
+         let candidateId = this.state.id
 
-      //    while(userId == ''){
-      //      while(managerId == ''){
-      //        managerId = this.state.manager.toString()
-      //        userId = this.state.manager.toString()
-      //      }
-      //     }
+        // window.alert("Oh my GOD Rahul Gandhi v2")
 
-      //     if(userId != managerId){
-      //       window.alert("Not manager")
-      //      // window.location.href = "../"
+        try{
+          console.log(this.state.account)
+          console.log(this.state.manager)
+          window.alert(this.state.id)
+          await this.state.election.methods.addCandidate(candidateId, candidateName).send({from: this.state.account})
+          let candidate = await this.state.election.methods.candidates(candidateId).call()
+          window.alert("Added Candiate is: " + candidate.name + " with id " + candidate.id)
+          this.state.id++
+          window.alert(this.state.id)
+          window.location.reload()
+        }
+        catch(err){
+          window.alert("Couldnt add candidate")
+        }
+      }
             
-      
+      setOpen = (_state) => {
+        this.setState({open: _state})
+      }
+    
       render() {
         return (
           <>
           <Head><title>{this.state.head}</title></Head>
           <Segment basic inverted padded='very' raised size='huge'>
-            <h1><b>Admin Panel</b></h1>
-            <h3 className='intro-h3'>You can add candidates and declare result</h3>
+          <motion.div initial="hidden" animate="visible" variants={{
+  hidden: {
+    scale: .8,
+    opacity: 0
+  },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      delay: .4
+    }
+  },
+}}>          
+            <h1><b><Icon name='chess board' className='election-icon' size='big' />Admin Panel</b></h1>
+            <h3 className='intro-h3'>You can add candidates and declare result</h3></motion.div>
             </Segment>
 
             <div>
             <div className='candidate-form'>
-            <CandidateForm icon ='chess queen' ></CandidateForm></div>
+            <Modal
+      open={this.state.open}
+      onClose={() => this.setOpen(false)}
+      onOpen={() => this.setOpen(true)}
+      trigger={<Button animated = 'fade' size ='massive' >
+          <Button.Content  visible className = 'button-font'>Add Candidate</Button.Content>
+          <Button.Content hidden>
+        <Icon name='chess queen' />
+      </Button.Content>
+          </Button>}
+    >
+      <Modal.Header>Candidate Profile</Modal.Header>
+      <Modal.Content image scrolling>
+        <Image size='medium' src='/images/wireframe/image.png' wrapped />
+
+        <Modal.Description>
+          {/* <p>
+            This is an example of expanded content that will cause the modal's
+            dimmer to scroll.
+          </p> */}
+          <Form onSubmit={this.onSubmit}>
+    <Form.Field>
+      <label>Candidate Name</label>
+      <input placeholder='Name' value={this.state.name} onChange={event => this.setState({name: event.target.value})} required />
+    </Form.Field>
+    <Form.Field>
+      <label>Party</label>
+      <input placeholder='Party'value={Admin.party} onChange={event => this.setState({party: event.target.value})} required/>
+    </Form.Field>
+    <Form.Field
+        control={Select}
+        options={genderOptions}
+        label={{ children: 'Gender', htmlFor: 'form-select-control-gender' }}
+        placeholder='Gender'
+        search
+        searchInput={{ id: 'form-select-control-gender' }}
+        required
+      />
+    <Button type='submit'>Submit</Button>
+  </Form>
+          
+        </Modal.Description>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button onClick={() => setOpen(false) } primary>
+          Proceed <Icon name='chevron right' />
+        </Button>
+      </Modal.Actions>
+    </Modal>
+            </div>
             <div className='candidate-form' style={{float : "right"}} >
             <Button animated='fade' size='huge'>
       <Button.Content visible >Declare Result</Button.Content>

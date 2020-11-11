@@ -38,7 +38,7 @@ const CandidateForm = (props) => {
     </Form.Field>
     <Form.Field>
       <label>Party</label>
-      <input placeholder='Party' />
+      <input placeholder='Party' value={props.name} onChange={event =>  props.setState({name: props.name}) } required/>
     </Form.Field>
     <Form.Field
         control={Select}

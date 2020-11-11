@@ -9930,12 +9930,12 @@
         }
       },
       "links": {},
-      "address": "0x0f9b79B4c744BD441487cBAb9064c91B666c2D79",
-      "transactionHash": "0xbbf9b91da6fd14d5c09bc1ece6b920cc7c07e7234f21e906934bf63b4f49dbb7"
+      "address": "0xfF8aCe66D4c8F68F021C6E087f9598160a48045F",
+      "transactionHash": "0x749256363009a700706513ae20ddb74ba93da2700359a1c8f052e68928780265"
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-11-10T16:58:32.051Z",
+  "updatedAt": "2020-11-11T19:30:02.806Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
