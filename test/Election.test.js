@@ -18,6 +18,7 @@ contract('Election', () => {
 
     it('can add a candidate', async () => {
         await election.addCandidate(1,'RG',{from: accounts[0]})
+        await election.uploadImage('123','trump')
         const candidate1 = await election.candidates(1)
         assert.equal(candidate1.name, "RG")
         assert.equal(candidate1.voteCount, 0)
@@ -36,7 +37,9 @@ contract('Election', () => {
         await election.register('B',{from: accounts[3]})
 
         await election.addCandidate(2,'NM',{from: accounts[0]})
+        await election.uploadImage('123','trump')
         await election.addCandidate(3,'AAP',{from: accounts[0]})
+        await election.uploadImage('123','trump')
 
         const voter2 = await election.voters(accounts[2])
         const voter3 = await election.voters(accounts[3]) 
@@ -150,6 +153,31 @@ contract('Election', () => {
         })
         
         
+    })
+
+    describe('Image upload check', async () => {
+        let result 
+        let imageCount
+
+        beforeEach(async () => {
+            await election.addCandidate(4,'RG',{from: accounts[0]})
+           
+            result = await election.uploadImage('abc123','biden',{from: accounts[0]})
+            imageCount = await election.imageCount()
+        })
+
+        it('creates images', async () => {
+
+            image = await election.images(1)
+            //console.log(result.logs[0].args)
+            const event = result.logs[0].args
+
+
+            assert.equal(event.id.toNumber(), imageCount, 'id is correct')
+            assert.equal(event.imghash, 'abc123', 'Hash is correct')
+            assert.equal(event.description, 'biden', 'Description is correct')
+        })
+
     })
 
 } )

@@ -9,6 +9,10 @@
   },
   "dependencies": {
     "framer-motion": "^2.9.4",
+    "identicon": "^3.0.1",
+    "ipfs-api": "^26.1.2",
+    "ipfs-http-client": "^48.1.0",
+    "identicon.js": "^2.3.3",
     "next": "9.5.4",
     "next-images": "^1.6.2",
     "react": "16.13.1",

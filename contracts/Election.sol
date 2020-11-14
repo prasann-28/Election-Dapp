@@ -14,11 +14,22 @@ contract Election {
     uint public votersCount = 0;
     uint public candidatesCount= 0;
     address public manager;
+    uint public imageCount = 0;
+
+    
         
     struct Candidate{
         uint id;
         string name;
         uint voteCount;
+        bool exists;
+    }
+
+    struct Image{
+        uint id;
+        string imghash;
+        string description;
+
     }
 
     struct Voter {
@@ -32,7 +43,7 @@ contract Election {
     //mapping is key => value pairs 
     mapping(uint => Candidate) public candidates;
     mapping(address => Voter) public voters;
-    
+    mapping(uint => Image) public images;
     //uint public candidateId;
    
     Candidate public winner;
@@ -53,10 +64,12 @@ contract Election {
 
     //manager adds candidates with default values
     function addCandidate(uint _id, string memory _name) public restricted{
+        require(!candidates[_id].exists);
         Candidate memory newCandidate = Candidate({
             name: _name,
             id: _id,
-            voteCount: 0
+            voteCount: 0,
+            exists: true
         });
 
         candidatesCount++;
@@ -128,6 +141,30 @@ contract Election {
 
         }   
     }
+
+    
+  event ImageCreated(
+    uint id,
+    string imghash,
+    string description
+  );
+
+    function uploadImage(string memory _imgHash, string memory _description) public restricted {
+    // Make sure the image hash exists
+    require(bytes(_imgHash).length > 0);
+    // Make sure image description exists
+    require(bytes(_description).length > 0); 
+    // Make sure uploader address exists
+
+    require(candidatesCount == imageCount+1);
+    // Increment image id
+    imageCount ++;
+
+    // Add Image to the contract
+    images[imageCount] = Image(imageCount, _imgHash, _description);
+    // Trigger an event
+    emit ImageCreated(imageCount, _imgHash, _description);
+  }
     
        
 }

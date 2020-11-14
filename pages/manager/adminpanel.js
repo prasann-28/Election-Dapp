@@ -6,6 +6,12 @@ import { Button, Form, Segment, Input, Icon, List, Image, Modal, Select } from '
 import {motion} from 'framer-motion'
 import 'next/router'
 import 'semantic-ui-css/semantic.min.css'
+import ImageUpload from '../api/ImageUpload'
+
+//Declare IPFS
+const ipfsClient = require('ipfs-http-client')
+const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' }) // leaving out the arguments will default to these values
+
 const genderOptions = [
   { key: 'm', text: 'Male', value: 'male' },
   { key: 'f', text: 'Female', value: 'female' },
@@ -13,8 +19,11 @@ const genderOptions = [
 ]
 
 
+
 export default class Admin extends Component {
-    async componentDidMount() {
+   
+  
+  async componentDidMount() {
       await this.loadWeb3()
         await this.loadBlockchainData()
       }
@@ -67,7 +76,95 @@ export default class Admin extends Component {
           window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
         }
       }
+
+      captureFile = event => {
+
+        event.preventDefault()
+        const file = event.target.files[0]
+        const reader = new window.FileReader()
+        reader.readAsArrayBuffer(file)
     
+        reader.onloadend = () => {
+          this.setState({ buffer: Buffer(reader.result) })
+          console.log('buffer', this.state.buffer)
+        }
+      }
+      uploadImage = description => {
+        console.log("Submitting file to ipfs...")
+    
+        //adding file to the IPFS
+        ipfs.add(this.state.buffer, (error, result) => {
+          console.log('Ipfs result', result)
+          if(error) {
+            console.error(error)
+            return
+          }
+    
+          this.setState({ loading: true })
+          this.state.election.methods.uploadImage(result[0].hash, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
+            this.setState({ loading: false })
+          })
+        })
+      }
+    
+      onSubmit = async (event) =>{
+        event.preventDefault()
+        
+        let candidateNumber = this.state.num
+        // window.alert("Oh my GOD Rahul Gandhi v2")
+        let candidateName = this.state.name
+        try{
+          candidateNumber++
+          window.alert(candidateNumber)
+          await this.state.election.methods.addCandidate(candidateNumber,candidateName).send({from: this.state.account})
+          //window.alert(candidateNumber+1)
+          let candidate = await this.state.election.methods.candidates(candidateNumber).call()
+          //window.alert(candidateNumber+2)  
+          this.setState({num: candidateNumber})
+          //window.alert(candidateNumber+3)
+          console.log(candidate)
+          window.alert("Added successfully")
+        }
+        catch(err){
+          window.alert("Couldnt add candidate")
+        }
+      }
+            
+      setOpen = (_state) => {
+        this.setState({open: _state})
+      }
+
+      captureFile = event => {
+
+        event.preventDefault()
+        const file = event.target.files[0]
+        const reader = new window.FileReader()
+        reader.readAsArrayBuffer(file)
+    
+        reader.onloadend = () => {
+          this.setState({ buffer: Buffer(reader.result) })
+          console.log('buffer', this.state.buffer)
+        }
+      }
+      uploadImage = description => {
+        console.log("Submitting file to ipfs...")
+    
+        //adding file to the IPFS
+        ipfs.add(this.state.buffer, (error, result) => {
+          window.alert("Entered IPFS func")
+          console.log('Ipfs result'+ result)
+          if(error) {
+            console.error(error)
+            return
+          }
+    
+          this.setState({ loading: true })
+          this.state.election.methods.uploadImage(result[0].hash, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
+            this.setState({ loading: false })
+          })
+        })
+      }
+
       constructor(props) {
         super(props)
         this.state = {
@@ -79,36 +176,16 @@ export default class Admin extends Component {
           name: '',
           party: '',
           open: false,
-          id : ''
+          num : 0,
+          images: []
         }
-      }
+        this.uploadImage = this.uploadImage.bind(this)
+        this.captureFile = this.captureFile.bind(this)
+  }
 
-      onSubmit = async (event) =>{
-        event.preventDefault()
-         let candidateName = this.state.name
-         let candidateId = this.state.id
+      
 
-        // window.alert("Oh my GOD Rahul Gandhi v2")
 
-        try{
-          console.log(this.state.account)
-          console.log(this.state.manager)
-          window.alert(this.state.id)
-          await this.state.election.methods.addCandidate(candidateId, candidateName).send({from: this.state.account})
-          let candidate = await this.state.election.methods.candidates(candidateId).call()
-          window.alert("Added Candiate is: " + candidate.name + " with id " + candidate.id)
-          this.state.id++
-          window.alert(this.state.id)
-          window.location.reload()
-        }
-        catch(err){
-          window.alert("Couldnt add candidate")
-        }
-      }
-            
-      setOpen = (_state) => {
-        this.setState({open: _state})
-      }
     
       render() {
         return (
@@ -147,8 +224,7 @@ export default class Admin extends Component {
     >
       <Modal.Header>Candidate Profile</Modal.Header>
       <Modal.Content image scrolling>
-        <Image size='medium' src='/images/wireframe/image.png' wrapped />
-
+     <ImageUpload  images={this.state.images} captureFile={this.captureFile} uploadImage={this.uploadImage} />
         <Modal.Description>
           {/* <p>
             This is an example of expanded content that will cause the modal's
@@ -161,7 +237,7 @@ export default class Admin extends Component {
     </Form.Field>
     <Form.Field>
       <label>Party</label>
-      <input placeholder='Party'value={Admin.party} onChange={event => this.setState({party: event.target.value})} required/>
+      <input placeholder='Party' value={Admin.party} onChange={event => this.setState({party: event.target.value})} required/>
     </Form.Field>
     <Form.Field
         control={Select}
@@ -178,7 +254,7 @@ export default class Admin extends Component {
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>
-        <Button onClick={() => setOpen(false) } primary>
+        <Button onClick={() => this.setOpen(false) } primary>
           Proceed <Icon name='chevron right' />
         </Button>
       </Modal.Actions>
