@@ -3,20 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build"
   },
   "dependencies": {
     "framer-motion": "^2.9.4",
     "identicon": "^3.0.1",
+    "identicon.js": "^2.3.3",
     "ipfs-api": "^26.1.2",
     "ipfs-http-client": "^48.1.0",
-    "identicon.js": "^2.3.3",
     "next": "9.5.4",
     "next-images": "^1.6.2",
+    "node-gyp": "^7.1.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "rebuild": "^0.1.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.0"
   }

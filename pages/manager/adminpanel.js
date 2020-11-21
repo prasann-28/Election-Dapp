@@ -7,6 +7,8 @@ import {motion} from 'framer-motion'
 import 'next/router'
 import 'semantic-ui-css/semantic.min.css'
 import ImageUpload from '../api/ImageUpload'
+//import 'ipfs-http-client'
+import 'ipfs-api'
 
 //Declare IPFS
 const ipfsClient = require('ipfs-http-client')
@@ -77,7 +79,7 @@ export default class Admin extends Component {
         }
       }
 
-      captureFile = event => {
+      captureFile = async (event) => {
 
         event.preventDefault()
         const file = event.target.files[0]
@@ -89,20 +91,19 @@ export default class Admin extends Component {
           console.log('buffer', this.state.buffer)
         }
       }
-      uploadImage = description => {
+      uploadImage = async (description) => {
         console.log("Submitting file to ipfs...")
     
         //adding file to the IPFS
-        ipfs.add(this.state.buffer, (error, result) => {
+        await ipfs.add(this.state.buffer, (error, result) => {
           console.log('Ipfs result', result)
           if(error) {
             console.error(error)
             return
           }
-    
-          this.setState({ loading: true })
           this.state.election.methods.uploadImage(result[0].hash, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
-            this.setState({ loading: false })
+            // this.setState({ loading: true })
+            // this.setState({ loading: false })
           })
         })
       }
@@ -122,7 +123,7 @@ export default class Admin extends Component {
           //window.alert(candidateNumber+2)  
           this.setState({num: candidateNumber})
           //window.alert(candidateNumber+3)
-          console.log(candidate)
+          console.log(candidate.id)
           window.alert("Added successfully")
         }
         catch(err){
