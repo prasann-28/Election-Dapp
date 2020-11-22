@@ -73,34 +73,17 @@ export default class Login extends Component {
           head: ''
         }
       }
-
-      // tokencheck = async () => {
-      //    if(this.state.account != '0x0'){
-      //     //this.setState({message: 'Checking auth status'})
-
-      //      if(this.state.voter.authenticated == false){
-      //        this.setState({message: 'Login first'})
-      //       //window.alert("login first")
-      //       window.location.href = "../login"
-      //      }
-      //     }
-      // } 
+ 
 
       render() {
         return (
           <>
           <Head><title>{this.state.head}</title></Head>
         <div>
-<<<<<<< HEAD
         <Segment basic inverted padded='very' raised size='massive'>
             <h1><b>Vote Here</b></h1></Segment>
         <div style = {{paddingLeft: '45px'}}>
         <div className="ui card"><div className="image"><img src="https://react.semantic-ui.com/images/avatar/large/matthew.png"/></div><div className="content"><div className="header">Matthew</div><div className="description">Matthew is a musician living in Nashville.</div></div><div className="extra content"><Button className = "ui-button">Cast Vote</Button></div></div>
-=======
-        <h1 style = {{color:"white",borderLeft: "30px",paddingLeft: "60px",border:"solid 1px #f00", padding:"80px",backgroundColor: "black", textAlign: "center", width: "100%", height: "300px"}}>Voting</h1>
-        <div style = {{paddingLeft: '45px'}}>
-        <div class="ui card"><div class="image"><img src="https://react.semantic-ui.com/images/avatar/large/matthew.png"/></div><div class="content"><div class="header">Matthew</div><div class="description">Matthew is a musician living in Nashville.</div></div><div class="extra content"><button class = "ui-button"> Button</button></div></div>
->>>>>>> fbfb7323bb6732b4dd032bc2ad58c01fa64b8e36
         </div>
         <h2>{this.state.message}</h2>
         <h1>{this.state.account}</h1>
@@ -108,4 +91,5 @@ export default class Login extends Component {
           </>
         );
       } 
-}
+
+    }
