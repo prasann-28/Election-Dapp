@@ -6,7 +6,8 @@ const VoteCard = (props) => (
   <Card.Group>
     <Card>
       <Card.Content>
-        <Image className = {props.name}
+        <Image className = {props.name} 
+          src = {props.imgsrc}
           floated='right'
           size='medium'
           

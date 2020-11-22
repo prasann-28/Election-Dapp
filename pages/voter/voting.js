@@ -2,11 +2,11 @@ import Head from 'next/head'
 import React, { Component } from 'react'
 import Web3 from 'web3'
 import Election from '../../build/contracts/Election.json'
-//import { Button, Form, Segment, Input } from 'semantic-ui-react'
-
-import 'next/router'
-import VoteCard from '../api/VoteCard'
+import { Button, Form, Segment, Input } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
+import 'next/router'
+import { Card, Icon, Image } from 'semantic-ui-react'
+
 
 export default class Login extends Component {
     async componentDidMount() {
@@ -70,8 +70,7 @@ export default class Login extends Component {
           loading: true,
           account: '0x0',
           message: '',
-          head: '',
-          candidateName : 'Donald Trump'
+          head: ''
         }
       }
 
@@ -86,18 +85,19 @@ export default class Login extends Component {
       //      }
       //     }
       // } 
-      
+
       render() {
         return (
           <>
           <Head><title>{this.state.head}</title></Head>
         <div>
+        <Segment basic inverted padded='very' raised size='massive'>
+            <h1><b>Vote Here</b></h1></Segment>
+        <div style = {{paddingLeft: '45px'}}>
+        <div className="ui card"><div className="image"><img src="https://react.semantic-ui.com/images/avatar/large/matthew.png"/></div><div className="content"><div className="header">Matthew</div><div className="description">Matthew is a musician living in Nashville.</div></div><div className="extra content"><Button className = "ui-button">Cast Vote</Button></div></div>
+        </div>
         <h2>{this.state.message}</h2>
         <h1>{this.state.account}</h1>
-        <div>
-        <VoteCard candidateName={this.state.candidateName} candidateParty ='Republican Party' candidateAgenda = 'Getting revenge on Stone Cold Austin' name = 'trump'
-         ></VoteCard>
-        </div>
         </div>
           </>
         );
