@@ -6,7 +6,7 @@ const VoteCard = (props) => (
   <Card.Group>
     <Card>
       <Card.Content>
-        <Image className = {props.name} 
+        <Image  
           src = {props.imgsrc}
           floated='right'
           size='medium'
@@ -21,7 +21,7 @@ const VoteCard = (props) => (
       <Card.Content extra>
         <div className='ui two buttons'>
           <Button basic color='green'>
-            Approve
+           Cast Vote
           </Button>
         </div>
       </Card.Content>

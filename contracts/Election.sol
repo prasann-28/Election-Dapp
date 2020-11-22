@@ -72,7 +72,8 @@ contract Election {
             exists: true
         });
 
-        candidatesCount++;
+        ++candidatesCount;
+        
         candidates[candidatesCount] =  newCandidate;
     }
     

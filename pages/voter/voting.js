@@ -6,6 +6,7 @@ import { Button, Form, Segment, Input } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import 'next/router'
 import { Card, Icon, Image } from 'semantic-ui-react'
+import VoteCard from '../api/VoteCard'
 
 
 export default class Login extends Component {
@@ -34,6 +35,33 @@ export default class Login extends Component {
 
           let voterid = await election.methods.voters(accounts[0]).call();
           this.setState({voter: voterid})
+
+          let votersCount = await election.methods.votersCount().call()
+         // window.alert('votersCount:'+ votersCount)
+
+          let candidatesCount = await election.methods.candidatesCount().call()
+          //window.alert(candidatesCount)
+          
+          if(candidatesCount==0){
+            window.alert('No candidate present')
+            window.location.href = "../"
+          }
+
+          let getcandidates 
+          let getimages
+          let imageurls
+
+          for(let temp=parseInt(candidatesCount); temp > 0; temp--){
+            getcandidates[temp] = await election.methods.candidates(temp).call();
+            window.alert('getcandidates['+temp+']'+ getcandidates[temp])
+            getimages[temp] = await election.methods.images(temp).call()
+            imageurls[temp] = 'https://ipfs.infura.io/ipfs/' + getimages[temp].imghash.toString()
+            console.log(imageurls[temp])
+          }
+
+          this.setState({candidates: getcandidates})
+          this.setState({images: getimages})
+          this.setState({urls: imageurls})
 
           if(!voterid.authenticated){
             window.alert("Login first")
@@ -70,7 +98,10 @@ export default class Login extends Component {
           loading: true,
           account: '0x0',
           message: '',
-          head: ''
+          head: '',
+          candidates: [],
+          images: [],
+          urls: []
         }
       }
  
@@ -83,7 +114,7 @@ export default class Login extends Component {
         <Segment basic inverted padded='very' raised size='massive'>
             <h1><b>Vote Here</b></h1></Segment>
         <div style = {{paddingLeft: '45px'}}>
-        <div className="ui card"><div className="image"><img src="https://react.semantic-ui.com/images/avatar/large/matthew.png"/></div><div className="content"><div className="header">Matthew</div><div className="description">Matthew is a musician living in Nashville.</div></div><div className="extra content"><Button className = "ui-button">Cast Vote</Button></div></div>
+        <VoteCard imgsrc ={this.state.imageurls} candidateName ='test one' candidateParty='BJP' candidateAgenda='JSR'></VoteCard>
         </div>
         <h2>{this.state.message}</h2>
         <h1>{this.state.account}</h1>
