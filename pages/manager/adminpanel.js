@@ -7,12 +7,10 @@ import {motion} from 'framer-motion'
 import 'next/router'
 import 'semantic-ui-css/semantic.min.css'
 import ImageUpload from '../api/ImageUpload'
-//import 'ipfs-http-client'
-import 'ipfs-api'
 
 //Declare IPFS
-const ipfsClient = require('ipfs-http-client')
-const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' }) // leaving out the arguments will default to these values
+const ipfsClient = require('ipfs-api')
+const ipfs = new ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' }) // leaving out the arguments will default to these values
 
 const genderOptions = [
   { key: 'm', text: 'Male', value: 'male' },
@@ -79,35 +77,7 @@ export default class Admin extends Component {
         }
       }
 
-      captureFile = async (event) => {
-
-        event.preventDefault()
-        const file = event.target.files[0]
-        const reader = new window.FileReader()
-        reader.readAsArrayBuffer(file)
-    
-        reader.onloadend = () => {
-          this.setState({ buffer: Buffer(reader.result) })
-          console.log('buffer', this.state.buffer)
-        }
-      }
-      uploadImage = async (description) => {
-        console.log("Submitting file to ipfs...")
-    
-        //adding file to the IPFS
-        await ipfs.add(this.state.buffer, (error, result) => {
-          console.log('Ipfs result', result)
-          if(error) {
-            console.error(error)
-            return
-          }
-          this.state.election.methods.uploadImage(result[0].hash, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
-            // this.setState({ loading: true })
-            // this.setState({ loading: false })
-          })
-        })
-      }
-    
+     
       onSubmit = async (event) =>{
         event.preventDefault()
         
@@ -118,6 +88,7 @@ export default class Admin extends Component {
           candidateNumber++
           window.alert(candidateNumber)
           await this.state.election.methods.addCandidate(candidateNumber,candidateName).send({from: this.state.account})
+          await this.state.election.methods.uploadImage(this.state.imghash, this.state.imgdescription).send({from: this.state.account})
           //window.alert(candidateNumber+1)
           let candidate = await this.state.election.methods.candidates(candidateNumber).call()
           //window.alert(candidateNumber+2)  
@@ -138,31 +109,28 @@ export default class Admin extends Component {
       captureFile = event => {
 
         event.preventDefault()
+        console.log("Entered Capture File")
         const file = event.target.files[0]
-        const reader = new window.FileReader()
+        const reader = new FileReader()
         reader.readAsArrayBuffer(file)
     
         reader.onloadend = () => {
           this.setState({ buffer: Buffer(reader.result) })
-          console.log('buffer', this.state.buffer)
+          console.log('buffer ', this.state.buffer)
         }
       }
-      uploadImage = description => {
+      uploadImage = (description) => {
         console.log("Submitting file to ipfs...")
-    
         //adding file to the IPFS
-        ipfs.add(this.state.buffer, (error, result) => {
-          window.alert("Entered IPFS func")
-          console.log('Ipfs result'+ result)
+        this.setState({imgdescription: description})
+        ipfs.add(this.state.buffer , async (error, result) =>{
+          console.log('https://ipfs.infura.io/ipfs/'+ result[0].hash)
           if(error) {
-            console.error(error)
-            return
+            return console.error(error)
           }
-    
-          this.setState({ loading: true })
-          this.state.election.methods.uploadImage(result[0].hash, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
-            this.setState({ loading: false })
-          })
+          
+         this.setState({imghash: result[0].hash})
+         window.alert("this.state.imghash: "+ this.state.imghash )
         })
       }
 
@@ -178,7 +146,10 @@ export default class Admin extends Component {
           party: '',
           open: false,
           num : 0,
-          images: []
+          images: [],
+          imghash: '',
+          imgdescription: ''
+
         }
         this.uploadImage = this.uploadImage.bind(this)
         this.captureFile = this.captureFile.bind(this)
