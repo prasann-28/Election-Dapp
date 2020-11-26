@@ -15,6 +15,7 @@ contract Election {
     uint public candidatesCount= 0;
     address public manager;
     uint public imageCount = 0;
+    uint public votesCast = 0;
 
     
         
@@ -73,7 +74,8 @@ contract Election {
         });
 
         ++candidatesCount;
-        
+
+        require(candidatesCount == _id);
         candidates[candidatesCount] =  newCandidate;
     }
     
@@ -127,7 +129,7 @@ contract Election {
 
         voters[msg.sender].voted = true;
         candidates[_candidateId].voteCount++;
-
+        votesCast++;
     }
 
     //only manager declares the winner
@@ -150,7 +152,7 @@ contract Election {
     string description
   );
 
-    function uploadImage(string memory _imgHash, string memory _description) public restricted {
+    function uploadImage(uint _id, string memory _imgHash, string memory _description) public restricted {
     // Make sure the image hash exists
     require(bytes(_imgHash).length > 0);
     // Make sure image description exists
@@ -159,13 +161,11 @@ contract Election {
 
     require(candidatesCount == imageCount+1);
     // Increment image id
-    imageCount ++;
-
+    ++imageCount;
+    //require(imageCount == candidatesCount);
     // Add Image to the contract
-    images[imageCount] = Image(imageCount, _imgHash, _description);
+    images[imageCount] = Image(_id, _imgHash, _description);
     // Trigger an event
     emit ImageCreated(imageCount, _imgHash, _description);
   }
-    
-       
 }

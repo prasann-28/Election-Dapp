@@ -2,31 +2,20 @@ import React from 'react'
 import { Button, Card, Image } from 'semantic-ui-react'
 
 
-const VoteCard = (props) => (
-  <Card.Group>
-    <Card>
-      <Card.Content>
-        <Image  
-          src = {props.imgsrc}
-          floated='right'
-          size='medium'
-          
-        />
-        <Card.Header>{props.candidateName}</Card.Header>
-        <Card.Meta>{props.candidateParty}</Card.Meta>
-        <Card.Description>
-           <strong>{props.candidateAgenda}</strong>
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <div className='ui two buttons'>
-          <Button basic color='green'>
-           Cast Vote
-          </Button>
+const VoteCard =  (props) => (
+  <div className="ui card" style={{alignSelf: "center"}}>
+    <div className="image">
+      <img src={props.imgsrc} style ={{width:'290px', height: '290px'}}/>
+    </div>
+    <div className="content">
+<div className="header">{props.candidateName}</div>
+      <div className="meta"><span className="date">{props.party}</span></div>
+      <div className="description">{props.candidateAgenda}</div>
+      </div>
+      <div style={{paddingBottom : "1rem"}}>
+      <Button positive onClick={props.onClick} onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>Cast Vote</Button>
         </div>
-      </Card.Content>
-    </Card>
-  </Card.Group>
+  </div>
 )
 
 export default VoteCard

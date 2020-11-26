@@ -18,7 +18,7 @@ contract('Election', () => {
 
     it('can add a candidate', async () => {
         await election.addCandidate(1,'RG',{from: accounts[0]})
-        await election.uploadImage('123','trump')
+        await election.uploadImage(1,'123','trump')
         const candidate1 = await election.candidates(1)
         assert.equal(candidate1.name, "RG")
         assert.equal(candidate1.voteCount, 0)
@@ -37,9 +37,9 @@ contract('Election', () => {
         await election.register('B',{from: accounts[3]})
 
         await election.addCandidate(2,'NM',{from: accounts[0]})
-        await election.uploadImage('123','trump')
+        await election.uploadImage(2,'123','trump')
         await election.addCandidate(3,'AAP',{from: accounts[0]})
-        await election.uploadImage('123','trump')
+        await election.uploadImage(3,'123','trump')
 
         const voter2 = await election.voters(accounts[2])
         const voter3 = await election.voters(accounts[3]) 
@@ -102,6 +102,9 @@ contract('Election', () => {
         const candidate2 = await election.candidates(2)
         const candidate3 = await election.candidates(3)
 
+        console.log(candidate1)
+        console.log(candidate2)
+
         assert(voter1.voted)
         assert(voter3.voted)
         assert(voter2.voted)
@@ -162,7 +165,7 @@ contract('Election', () => {
         beforeEach(async () => {
             await election.addCandidate(4,'RG',{from: accounts[0]})
            
-            result = await election.uploadImage('abc123','biden',{from: accounts[0]})
+            result = await election.uploadImage(4,'abc123','biden',{from: accounts[0]})
             imageCount = await election.imageCount()
         })
 

@@ -40,35 +40,56 @@ export default class Login extends Component {
          // window.alert('votersCount:'+ votersCount)
 
           let candidatesCount = await election.methods.candidatesCount().call()
-          //window.alert(candidatesCount)
+          window.alert(candidatesCount)
+
+          let imageCount = await election.methods.imageCount().call()
+          window.alert(imageCount)
           
-          if(candidatesCount==0){
-            window.alert('No candidate present')
-            window.location.href = "../"
-          }
+          // if(candidatesCount==0){
+          //   window.alert('No candidate present')
+          //   window.location.href = "../"
+          // }
 
-          let getcandidates 
-          let getimages
-          let imageurls
+          let candidate1 = await election.methods.candidates(1).call()
+          let candidate2 = await election.methods.candidates(2).call()
+          let candidate3 = await election.methods.candidates(3).call()
+          
+          console.log(candidate1.id) 
+          let image1 = await election.methods.images(1).call()
+          let image2 = await election.methods.images(2).call()
+          let image3 = await election.methods.images(3).call()
+        
+          //console.log(image.imghash)
+          let imageurl1 = "https://ipfs.infura.io/ipfs/" + image1.imghash
+          let imageurl2 = "https://ipfs.infura.io/ipfs/" + image2.imghash
+          let imageurl3 = "https://ipfs.infura.io/ipfs/" + image3.imghash
 
-          for(let temp=parseInt(candidatesCount); temp > 0; temp--){
-            getcandidates[temp] = await election.methods.candidates(temp).call();
-            window.alert('getcandidates['+temp+']'+ getcandidates[temp])
-            getimages[temp] = await election.methods.images(temp).call()
-            imageurls[temp] = 'https://ipfs.infura.io/ipfs/' + getimages[temp].imghash.toString()
-            console.log(imageurls[temp])
-          }
 
-          this.setState({candidates: getcandidates})
-          this.setState({images: getimages})
-          this.setState({urls: imageurls})
+          this.setState({candidate1: candidate1})
+          this.setState({candidate2: candidate2})
+          this.setState({candidate3: candidate3})
 
-          if(!voterid.authenticated){
-            window.alert("Login first")
-            window.location.href= "../login"
-          }else{
-            this.setState({head: "Vote Here"})
-          }
+          this.setState({image1: image1})
+          this.setState({image2: image2})
+          this.setState({image3: image3})
+
+
+          this.setState({url1: imageurl1})
+          this.setState({url2: imageurl2})
+          this.setState({url3: imageurl3})
+
+          console.log(this.state.url1)
+          console.log(this.state.url1)
+          console.log(this.state.url1)
+          
+
+          
+          // if(!voterid.authenticated){
+          //   window.alert("Login first")
+          //   window.location.href= "../login"
+          // }else{
+          //   this.setState({head: "Vote Here"})
+          // }
       } else {
         window.alert('Not deployed to network');
       }
@@ -99,11 +120,50 @@ export default class Login extends Component {
           account: '0x0',
           message: '',
           head: '',
-          candidates: [],
-          images: [],
-          urls: []
+          candidate1: [],
+          candidate2: [],
+          candidate3: [],
+          candidate4: [],
+          image1: [],
+          image2: [],
+          image3: [],
+          image4: [],
+          url1: '',
+          url2: '',
+          url3: '',
+          url4: '',
+          id: 0         
         }
       }
+
+      onClick = async () => {
+         try{
+          this.setState({id: this.state.candidate1.id})
+          window.alert(this.state.id)
+          let candidateid = this.state.id
+          await this.state.election.methods.vote(this.state.id).send({from: this.state.account})
+          let candidateVoted = await this.state.election.methods.candidates(candidateid).call()
+          let voter = await this.state.election.methods.voters(this.state.account).call()
+
+          console.log(candidateVoted.voteCount)
+          console.log(voter.voted)
+        }
+        catch(err){
+          window.alert("could not vote")
+        }
+
+       
+      }
+
+      // onMouseEnter = (_id) => {
+      //   this.setState({id: _id})
+      //   console.log(this.state.id)
+      // }
+
+      // onMouseLeave = () => {
+      //   this.setState({id: 0})
+      //   console.log(this.state.id)
+      // }
  
 
       render() {
@@ -113,11 +173,19 @@ export default class Login extends Component {
         <div>
         <Segment basic inverted padded='very' raised size='massive'>
             <h1><b>Vote Here</b></h1></Segment>
-        <div style = {{paddingLeft: '45px'}}>
-        <VoteCard imgsrc ={this.state.imageurls} candidateName ='test one' candidateParty='BJP' candidateAgenda='JSR'></VoteCard>
+        <div style = {{paddingLeft: '45px',float: 'left'}}>
+        <VoteCard imgsrc ={this.state.url1} party='INC' candidateAgenda='Potato is Gold' candidateName={this.state.candidate1.name} onClick={this.onClick}
+        ></VoteCard>
         </div>
-        <h2>{this.state.message}</h2>
-        <h1>{this.state.account}</h1>
+        <div style = {{paddingLeft: '45px',float: 'left'}}>
+        <VoteCard imgsrc ={this.state.url2} party='Republican' candidateAgenda='Fuck Stone Cold Steve Austin'></VoteCard>
+        </div>
+        <div style = {{paddingLeft: '45px',float: 'left'}}>
+        <VoteCard imgsrc ={this.state.url3} party='Other' candidateAgenda='IDGAF'></VoteCard>
+        </div>
+        <div style = {{paddingLeft: '45px',float: 'left'}}>
+        <VoteCard imgsrc ={this.state.url} candidateParty='BSP' candidateAgenda='JSR'></VoteCard>
+        </div>
         </div>
           </>
         );

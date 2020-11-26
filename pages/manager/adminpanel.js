@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React, { Component } from 'react'
 import Web3 from 'web3'
 import Election from '../../build/contracts/Election.json'
-import { Button, Form, Segment, Input, Icon, List, Image, Modal, Select } from 'semantic-ui-react'
+import { Button, Form, Segment, Input, Icon, List, Image, Modal, Select, Statistic } from 'semantic-ui-react'
 import {motion} from 'framer-motion'
 import 'next/router'
 import 'semantic-ui-css/semantic.min.css'
@@ -46,8 +46,18 @@ export default class Admin extends Component {
           let manager = await election.methods.manager().call();
           this.setState({manager: manager})
 
-          // let voterid = await election.methods.voters(accounts[0]).call();
-          // this.setState({authenticated: voterid.authenticated})
+          let candnum = await election.methods.candidatesCount().call()
+          this.setState({num: candnum})
+          window.alert(candnum)
+
+          
+          let votesCast = await election.methods.votesCast().call()
+          this.setState({votesCast: votesCast})
+          
+          let votersCount = await election.methods.votersCount().call()
+          let remaining = votersCount - votesCast
+          this.setState({remainingCount: remaining})
+          
           if(manager != accounts[0])
           {this.setState({head: 'Not your regular page'})
             window.alert('not manager')
@@ -88,7 +98,7 @@ export default class Admin extends Component {
           candidateNumber++
           window.alert(candidateNumber)
           await this.state.election.methods.addCandidate(candidateNumber,candidateName).send({from: this.state.account})
-          await this.state.election.methods.uploadImage(this.state.imghash, this.state.imgdescription).send({from: this.state.account})
+          await this.state.election.methods.uploadImage(candidateNumber,this.state.imghash, this.state.imgdescription).send({from: this.state.account})
           //window.alert(candidateNumber+1)
           let candidate = await this.state.election.methods.candidates(candidateNumber).call()
           //window.alert(candidateNumber+2)  
@@ -148,8 +158,9 @@ export default class Admin extends Component {
           num : 0,
           images: [],
           imghash: '',
-          imgdescription: ''
-
+          imgdescription: '',
+          votersCount: 0,
+          votesCast: 0
         }
         this.uploadImage = this.uploadImage.bind(this)
         this.captureFile = this.captureFile.bind(this)
@@ -233,14 +244,26 @@ export default class Admin extends Component {
     </Modal>
             </div>
             <div className='candidate-form' style={{float : "right"}} >
-            <Button animated='fade' size='huge'>
+            <Button animated='fade' size='huge' onClick={async () => {
+              await this.state.election.methods.finalizeResult().call({from: this.state.account})
+            }}>
       <Button.Content visible >Declare Result</Button.Content>
-      <Button.Content hidden>
+      <Button.Content hidden >
       <Icon name='chess' />
       </Button.Content>
     </Button>
             </div>
             
+            </div>
+
+            <div>
+            <Statistic>
+    <Statistic.Value>{this.state.votesCast}</Statistic.Value>
+    <Statistic.Label>Votes</Statistic.Label>
+          <Statistic.Value>{this.state.remainingCount}</Statistic.Value>
+    <Statistic.Label>Remaining</Statistic.Label>
+  </Statistic>
+
             </div>
 
            
