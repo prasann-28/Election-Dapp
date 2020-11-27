@@ -186,7 +186,7 @@ export default class Admin extends Component {
         return (
           <>
           <Head><title>{this.state.head}</title></Head>
-          <Segment basic inverted padded='very' raised size='huge'>
+          <Segment basic inverted padded='very' raised size='large' vertical>
           <motion.div initial="hidden" animate="visible" variants={{
   hidden: {
     scale: .8,
@@ -203,14 +203,14 @@ export default class Admin extends Component {
             <h1><b><Icon name='chess board' className='election-icon' size='big' />Admin Panel</b></h1>
             <h3 className='intro-h3'>You can add candidates and declare result</h3></motion.div>
             </Segment>
-
+            <div className='admin'>
             <div>
             <div className='candidate-form'>
             <Modal
       open={this.state.open}
       onClose={() => this.setOpen(false)}
       onOpen={() => this.setOpen(true)}
-      trigger={<Button animated = 'fade' size ='massive' >
+      trigger={<Button animated = 'fade' size ='massive' color='google plus' >
           <Button.Content  visible className = 'button-font'>Add Candidate</Button.Content>
           <Button.Content hidden>
         <Icon name='chess queen' />
@@ -256,8 +256,8 @@ export default class Admin extends Component {
     </Modal>
             </div>
             <div className='candidate-form' style={{float : "right"}} >
-            <Button animated='fade' size='huge' onClick={this.onClick}>
-      <Button.Content visible >Declare Result</Button.Content>
+            <Button animated='fade' size='massive' onClick={this.onClick} color='instagram'>
+      <Button.Content visible className='button-font' >Declare Result</Button.Content>
       <Button.Content hidden >
       <Icon name='chess' />
       </Button.Content>
@@ -265,8 +265,18 @@ export default class Admin extends Component {
             </div>
             
             </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
 
-            <div>
+            <div style={{ marginLeft:'20rem', marginRight:'20rem'}}>
             <Statistic>
     <Statistic.Value>{this.state.votesCast}</Statistic.Value>
     <Statistic.Label>Votes</Statistic.Label>
@@ -275,7 +285,12 @@ export default class Admin extends Component {
   </Statistic>
 
             </div>
-
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+       </div>
            
           </>
         );

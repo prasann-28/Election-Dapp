@@ -10,10 +10,14 @@ export default function Home() {
    <>
    <Head><title>Welcome</title></Head>
     <div className='Home'><EHeader /></div>
-   <div><ContainerExampleText/></div>
+   <body className='intro'><ContainerExampleText/>
    <br/>
    <br/><br/>
-   <div><LoginButton/></div>
+   <LoginButton/>
+   <br/>
+   <br/>
+   <br/>
+   </body>
    </>
   )
 }

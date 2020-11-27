@@ -181,24 +181,53 @@ export default class Login extends Component {
         return (
           <>
           <Head><title>{this.state.head}</title></Head>
-        <div>
-        <Segment basic inverted padded='very' raised size='massive'>
-            <h1><b>Vote Here</b></h1></Segment>
-        <div style = {{paddingLeft: '45px',float: 'left'}}>
+        <Segment basic inverted padded='very' raised size='small' vertical>
+            <h1><b>Vote Here</b></h1>
+            <h3 className='intro-h3'>Cast your Vote Here</h3>
+            </Segment>
+        <div className='voting'>
+        <div style = {{paddingLeft: '40px',float: 'left'}}>
         <VoteCard imgsrc ={this.state.url1} party='INC' candidateAgenda='Potato is Gold' candidateName={this.state.candidate1.name} onClick={() => this.onClick(this.state.candidate1.id)}
         ></VoteCard>
         </div>
-        <div style = {{paddingLeft: '45px',float: 'left'}}>
+        <div style = {{paddingLeft: '40px',float: 'left'}}>
         <VoteCard imgsrc ={this.state.url2} party='Republican' candidateAgenda='Fuck Stone Cold Steve Austin' candidateName={this.state.candidate2.name} onClick={() => this.onClick(this.state.candidate2.id)}></VoteCard>
         </div>
-        <div style = {{paddingLeft: '45px',float: 'left'}}>
+        <div style = {{paddingLeft: '40px',float: 'left'}}>
         <VoteCard imgsrc ={this.state.url3} party='Other' candidateAgenda='No Shave November' candidateName={this.state.candidate3.name} onClick={() => this.onClick(this.state.candidate3.id)}></VoteCard>
         </div>
-        <div style = {{paddingLeft: '45px',float: 'left'}}>
+        <div style = {{paddingLeft: '40px',float: 'left'}}>
         <VoteCard imgsrc ={this.state.url4} candidateParty='BSP' candidateAgenda='JSR' candidateName={this.state.candidate4.name} onClick={() => this.onClick(this.state.candidate4.id)}></VoteCard>
         </div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+
         </div>
-          </>
+               </>
         );
       } 
 

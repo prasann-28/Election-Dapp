@@ -117,11 +117,13 @@ export default class Register extends Component {
         return (
           <>
           <Head><title>Register Page</title></Head>
-          <Segment basic inverted padded='very' raised size='massive'>
+          <Segment basic inverted padded='very' raised size='massive' vertical>
             <h1><b>Register here to continue Voting</b></h1></Segment>
+            <div className='register'>
             <Form onSubmit={this.onSubmit}>
     <Form.Group widths='equal'>
       <Form.Field
+        
         id='form-input-control-first-name'
         control={Input}
         label='First name'
@@ -175,7 +177,16 @@ export default class Register extends Component {
       required
     />
   </Form>
-    <h1>{this.state.account}</h1>
+  <br></br>
+  <br></br>
+  <br></br>
+  <br></br>
+  <br></br>
+  <br></br>
+  <br></br>
+  <br></br>
+
+  </div>
           </>
         );
       } 

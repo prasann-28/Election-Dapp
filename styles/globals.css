@@ -15,6 +15,7 @@ body {
   font-family: 'Courier New', Courier, monospace;
   color: black; 
   text-align: center;
+  
 }
 
 a {
@@ -23,13 +24,27 @@ a {
 }
  .intro-button{
    color: teal;
- }
+
+  }
  .candidateForm-button{
    color: teal;
+   background-image: inherit;
  }
 
 .intro-container.ui.text.container{
-   color: inherit;
+   color: teal;
+   background-image: inherit;
+   
+   padding-top: 2rem;
+   padding-bottom: 2rem;
+   padding-left: 2rem;
+   padding-right: 2rem;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   font-size: large;
+   font-optical-sizing: 5rem;
+   /* color: teal; */
+   background-size: auto;
+   font-style: oblique;
     }
 .intro-h3{
   color:teal;
@@ -47,7 +62,7 @@ background-color:inherit;
 float: left;
 padding-left: 20ch;
 padding-right: 20ch;
-padding-top: 2ch;
+padding-top: 20ch;
 padding-bottom: 2ch;
 }
 .button-font{
@@ -56,4 +71,29 @@ padding-bottom: 2ch;
 .election-icon{
   padding-right: 5rem;
 }
+.intro{
+  background-image: url(../public/vote.jpg);
+  background-size: cover;
+}
 
+.admin{
+  background-image: url(../public/admin.jpg);
+  background-size: cover ;
+  height: 100%;
+  background-position: center;
+}
+
+.voting{
+  background-image: url(../public/voting.jpg);
+  padding-top: 3rem;
+  background-size: cover ;
+  height: 100%;
+  background-position: center;
+}
+
+.register{
+  background-image: url(../public/register.jpg);
+  background-position: center;
+  height: 100%;
+  background-size: cover;
+}
