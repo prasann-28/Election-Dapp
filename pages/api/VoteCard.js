@@ -13,7 +13,7 @@ const VoteCard =  (props) => (
       <div className="description">{props.candidateAgenda}</div>
       </div>
       <div style={{paddingBottom : "1rem"}}>
-      <Button positive onClick={props.onClick} onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>Cast Vote</Button>
+      <Button positive onClick={props.onClick}>Cast Vote</Button>
         </div>
   </div>
 )

@@ -144,6 +144,18 @@ export default class Admin extends Component {
         })
       }
 
+      onClick = async () => {
+        try{
+          await this.state.election.methods.finalizeResult().call()
+          let winner_var = await this.state.election.methods.winner().call({from: this.state.account})
+          this.setState({winner: winner_var})
+          console.log(this.state.winner) 
+        }
+        catch(err){
+          window.alert("Could not declare winner, try again")
+        }
+      }
+
       constructor(props) {
         super(props)
         this.state = {
@@ -244,9 +256,7 @@ export default class Admin extends Component {
     </Modal>
             </div>
             <div className='candidate-form' style={{float : "right"}} >
-            <Button animated='fade' size='huge' onClick={async () => {
-              await this.state.election.methods.finalizeResult().call({from: this.state.account})
-            }}>
+            <Button animated='fade' size='huge' onClick={this.onClick}>
       <Button.Content visible >Declare Result</Button.Content>
       <Button.Content hidden >
       <Icon name='chess' />

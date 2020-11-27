@@ -40,10 +40,10 @@ export default class Login extends Component {
          // window.alert('votersCount:'+ votersCount)
 
           let candidatesCount = await election.methods.candidatesCount().call()
-          window.alert(candidatesCount)
+         //  window.alert(candidatesCount)
 
           let imageCount = await election.methods.imageCount().call()
-          window.alert(imageCount)
+        // window.alert(imageCount)
           
           // if(candidatesCount==0){
           //   window.alert('No candidate present')
@@ -53,34 +53,41 @@ export default class Login extends Component {
           let candidate1 = await election.methods.candidates(1).call()
           let candidate2 = await election.methods.candidates(2).call()
           let candidate3 = await election.methods.candidates(3).call()
+          let candidate4 = await election.methods.candidates(4).call()
           
-          console.log(candidate1.id) 
+         
           let image1 = await election.methods.images(1).call()
           let image2 = await election.methods.images(2).call()
           let image3 = await election.methods.images(3).call()
+          let image4 = await election.methods.images(4).call()
         
           //console.log(image.imghash)
           let imageurl1 = "https://ipfs.infura.io/ipfs/" + image1.imghash
           let imageurl2 = "https://ipfs.infura.io/ipfs/" + image2.imghash
           let imageurl3 = "https://ipfs.infura.io/ipfs/" + image3.imghash
+          let imageurl4 = "https://ipfs.infura.io/ipfs/" + image4.imghash
 
 
           this.setState({candidate1: candidate1})
           this.setState({candidate2: candidate2})
           this.setState({candidate3: candidate3})
+          this.setState({candidate4: candidate4})
+
 
           this.setState({image1: image1})
           this.setState({image2: image2})
           this.setState({image3: image3})
+          this.setState({image4: image4})
 
 
           this.setState({url1: imageurl1})
           this.setState({url2: imageurl2})
           this.setState({url3: imageurl3})
+          this.setState({url4: imageurl4})
 
-          console.log(this.state.url1)
-          console.log(this.state.url1)
-          console.log(this.state.url1)
+          // console.log(this.state.url1)
+          // console.log(this.state.url1)
+          // console.log(this.state.url1)
           
 
           
@@ -136,12 +143,16 @@ export default class Login extends Component {
         }
       }
 
-      onClick = async () => {
-         try{
-          this.setState({id: this.state.candidate1.id})
-          window.alert(this.state.id)
-          let candidateid = this.state.id
-          await this.state.election.methods.vote(this.state.id).send({from: this.state.account})
+      onClick = async (cdid) => {
+        try{
+          // this.setState({id: cdid})
+          // while(this.state.id==0){
+
+          // }
+          
+          window.alert(cdid)
+          let candidateid = cdid
+          await this.state.election.methods.vote(cdid).send({from: this.state.account})
           let candidateVoted = await this.state.election.methods.candidates(candidateid).call()
           let voter = await this.state.election.methods.voters(this.state.account).call()
 
@@ -174,17 +185,17 @@ export default class Login extends Component {
         <Segment basic inverted padded='very' raised size='massive'>
             <h1><b>Vote Here</b></h1></Segment>
         <div style = {{paddingLeft: '45px',float: 'left'}}>
-        <VoteCard imgsrc ={this.state.url1} party='INC' candidateAgenda='Potato is Gold' candidateName={this.state.candidate1.name} onClick={this.onClick}
+        <VoteCard imgsrc ={this.state.url1} party='INC' candidateAgenda='Potato is Gold' candidateName={this.state.candidate1.name} onClick={() => this.onClick(this.state.candidate1.id)}
         ></VoteCard>
         </div>
         <div style = {{paddingLeft: '45px',float: 'left'}}>
-        <VoteCard imgsrc ={this.state.url2} party='Republican' candidateAgenda='Fuck Stone Cold Steve Austin'></VoteCard>
+        <VoteCard imgsrc ={this.state.url2} party='Republican' candidateAgenda='Fuck Stone Cold Steve Austin' candidateName={this.state.candidate2.name} onClick={() => this.onClick(this.state.candidate2.id)}></VoteCard>
         </div>
         <div style = {{paddingLeft: '45px',float: 'left'}}>
-        <VoteCard imgsrc ={this.state.url3} party='Other' candidateAgenda='IDGAF'></VoteCard>
+        <VoteCard imgsrc ={this.state.url3} party='Other' candidateAgenda='No Shave November' candidateName={this.state.candidate3.name} onClick={() => this.onClick(this.state.candidate3.id)}></VoteCard>
         </div>
         <div style = {{paddingLeft: '45px',float: 'left'}}>
-        <VoteCard imgsrc ={this.state.url} candidateParty='BSP' candidateAgenda='JSR'></VoteCard>
+        <VoteCard imgsrc ={this.state.url4} candidateParty='BSP' candidateAgenda='JSR' candidateName={this.state.candidate4.name} onClick={() => this.onClick(this.state.candidate4.id)}></VoteCard>
         </div>
         </div>
           </>
