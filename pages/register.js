@@ -6,10 +6,27 @@ import Election from '../build/contracts/Election.json'
 import { Button, Form, Segment, Input, TextArea, Select  } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import 'next/router'
+import FaceDetection from './api/camera.js'
+
 // import Loading from './api/Loading'
 // import { render } from 'react-dom'
+//Declare IPFS
+const ipfsClient = require('ipfs-api')
+const ipfs = new ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' }) // leaving out the arguments will default to these values
 
+captureFile = event => {
 
+  event.preventDefault()
+  console.log("Entered Capture File")
+  const file = event.target.files[0]
+  const reader = new FileReader()
+  reader.readAsArrayBuffer(file)
+
+  reader.onloadend = () => {
+    this.setState({ buffer: Buffer(reader.result) })
+    console.log('buffer ', this.state.buffer)
+  }
+}
 
 const genderOptions = [
   { key: 'm', text: 'Male', value: 'male' },
@@ -117,13 +134,11 @@ export default class Register extends Component {
         return (
           <>
           <Head><title>Register Page</title></Head>
-          <Segment basic inverted padded='very' raised size='massive' vertical>
+          <Segment basic inverted padded='very' raised size='massive'>
             <h1><b>Register here to continue Voting</b></h1></Segment>
-            <div className='register'>
             <Form onSubmit={this.onSubmit}>
     <Form.Group widths='equal'>
       <Form.Field
-        
         id='form-input-control-first-name'
         control={Input}
         label='First name'
@@ -177,16 +192,7 @@ export default class Register extends Component {
       required
     />
   </Form>
-  <br></br>
-  <br></br>
-  <br></br>
-  <br></br>
-  <br></br>
-  <br></br>
-  <br></br>
-  <br></br>
-
-  </div>
+    <FaceDetection></FaceDetection>
           </>
         );
       } 
