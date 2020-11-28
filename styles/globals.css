@@ -33,7 +33,7 @@ a {
 
 .intro-container.ui.text.container{
    color: teal;
-   background-image: inherit;
+   /* background-image: inherit; */
    
    padding-top: 2rem;
    padding-bottom: 2rem;

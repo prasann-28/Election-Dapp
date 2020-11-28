@@ -1,9 +1,10 @@
 import React from 'react'
-import 'semantic-ui-react'
 import LoginButton from './api/LoginButton'
 import ContainerExampleText from './api/container'
 import EHeader from './api/HeaderLogin'
 import Head from 'next/head'
+import {Icon} from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css'
 
 export default function Home() {
   return (

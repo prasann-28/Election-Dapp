@@ -1,9 +1,9 @@
 import React from 'react'
-import { Header, Segment } from 'semantic-ui-react'
+import { Header, Segment,Icon } from 'semantic-ui-react'
 
 const EHeader = () => (
   <Segment basic inverted raised size='small' padded='very' vertical >
-    <Header as='h1'>D-Election</Header>
+    <Header as='h1'><Icon name='chess board' className='election-icon' size='big' />D-Election</Header>
     <h1>Election based on Blockhain</h1>
     <h3 className='intro-h3'>Made using Truffle, ReactJS and Ganache</h3>
     </Segment>

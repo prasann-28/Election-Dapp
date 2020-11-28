@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Identicon from 'identicon.js';
-
+import 'semantic-ui-css/semantic.min.css'
 // const ipfsClient = require('ipfs-http-client')
 // const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' }) // leaving out the arguments will default to these values
 
@@ -19,10 +19,11 @@ class ImageUpload extends Component {
                 const description = this.imageDescription.value
                 this.props.uploadImage(description)
               }} >
-                <input type='file' accept=".jpg, .jpeg, .png, .bmp, .gif" onChange={this.props.captureFile} />
+                <div className='ui input'>
+                <input type='file' accept=".jpg, .jpeg, .png, .bmp, .gif"  onChange={this.props.captureFile} /></div>
                   <div className="form-group mr-sm-2">
                     <br></br>
-                      <input
+                      <input 
                         id="imageDescription"
                         type="text"
                         ref={(input) => { this.imageDescription = input }}
@@ -30,7 +31,7 @@ class ImageUpload extends Component {
                         placeholder="Image description..."
                         required />
                   </div>
-                <button type="submit" className="btn btn-primary btn-block btn-lg">Upload!</button>
+                <button type="submit" className="ui button" style={{ marginTop:'1rem'}}>Upload!</button>
               </form>
               <p>&nbsp;</p>
               { this.props.images.map((image, key) => {

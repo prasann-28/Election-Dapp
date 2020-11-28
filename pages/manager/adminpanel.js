@@ -146,7 +146,7 @@ export default class Admin extends Component {
 
       onClick = async () => {
         try{
-          await this.state.election.methods.finalizeResult().call()
+          await this.state.election.methods.finalizeResult().send({from: this.state.account})
           let winner_var = await this.state.election.methods.winner().call({from: this.state.account})
           this.setState({winner: winner_var})
           console.log(this.state.winner) 
