@@ -14,19 +14,6 @@ import FaceDetection from './api/camera.js'
 const ipfsClient = require('ipfs-api')
 const ipfs = new ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' }) // leaving out the arguments will default to these values
 
-captureFile = event => {
-
-  event.preventDefault()
-  console.log("Entered Capture File")
-  const file = event.target.files[0]
-  const reader = new FileReader()
-  reader.readAsArrayBuffer(file)
-
-  reader.onloadend = () => {
-    this.setState({ buffer: Buffer(reader.result) })
-    console.log('buffer ', this.state.buffer)
-  }
-}
 
 const genderOptions = [
   { key: 'm', text: 'Male', value: 'male' },
@@ -82,7 +69,23 @@ export default class Register extends Component {
           window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
         }
       }
-    
+      
+
+      captureFile = event => {
+
+        event.preventDefault()
+        console.log("Entered Capture File")
+        const file = event.target.files[0]
+        const reader = new FileReader()
+        reader.readAsArrayBuffer(file)
+      
+        reader.onloadend = () => {
+          this.setState({ buffer: Buffer(reader.result) })
+          console.log('buffer ', this.state.buffer)
+        }
+      }
+
+      
       constructor(props) {
         super(props)
         this.state = {
@@ -192,7 +195,7 @@ export default class Register extends Component {
       required
     />
   </Form>
-    <FaceDetection></FaceDetection>
+    {/* <FaceDetection></FaceDetection> */}
           </>
         );
       } 

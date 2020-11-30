@@ -17,7 +17,7 @@ function FaceDetection (props) {
           ? <ImagePreview dataUri={dataUri}
             isFullscreen={isFullscreen}
           />
-          : <Camera onTakePhotoAnimationDone = {props.captureFilez}
+          : <Camera onTakePhotoAnimationDone = {props.captureFile}
             isFullscreen={isFullscreen}
           />
       }

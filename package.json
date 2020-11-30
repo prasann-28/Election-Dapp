@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "datauri": "^3.0.0",
     "framer-motion": "^2.9.4",
     "identicon": "^3.0.1",
     "identicon.js": "^2.3.3",
@@ -17,8 +18,10 @@
     "next": "9.5.4",
     "next-images": "^1.6.2",
     "node-gyp": "^7.1.2",
+    "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-html5-camera-photo": "^1.5.4",
     "rebuild": "^0.1.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.0"

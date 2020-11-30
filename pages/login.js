@@ -91,19 +91,34 @@ export default class Login extends Component {
         return (
           <>
           <Head><title>Login Page</title></Head>
-          <Segment basic inverted padded='very' raised size='massive'>
+          <Segment basic inverted padded='very' raised size='huge' vertical>
             <h1><b>Login here to continue Voting</b></h1></Segment>
+        <body className='Login'>
+        <div className='box'>
+        <form className="ui form" onSubmit={this.onSubmit}>
+          <div className="field">
+            <div className='login-form'>
+            <label><h1>Identity Number</h1></label>
+            <br/>
+            <br/>
+
+            <input placeholder="ID" value={this.state.id} onChange={event => this.setState({id: event.target.value})}/>
+            </div>
+            </div>
+            <div className="field">
+            <div className='login-form' style={{paddingTop:'1rem'}}>
+              <label><h1>Password</h1></label>
+              <br/>
+              <br/>
+              <input type='password' placeholder="Password" value={this.state.password} onChange={event => this.setState({password: event.target.value})}/>
+              </div>
+              </div>
+             
+                  <button type="submit" className="ui button">Submit</button>
+          </form>
+          </div>
           
-          <Form unstackable className='LoginForm' onSubmit={this.onSubmit} >
-          <Form.Group widths={2}>
-          <Form.Input label='Identity Number' placeholder='Enter your ID' value={this.state.id} onChange={event => this.setState({id: event.target.value})} required/>
-          <Form.Input label='Enter Password' placeholder='Password' type='text' value={this.state.password} onChange={event => this.setState({password:event.target.value})} required />
-          </Form.Group>
-          <Form.Checkbox label='I agree to the Terms and Conditions' required error />
-          <Button type='submit'>Submit</Button>
-          </Form>        
-        <h1>{this.state.manager}</h1>
-        <h1>{this.state.account}</h1>
+         </body>
           </>
         );
       } 

@@ -97,3 +97,37 @@ padding-bottom: 2ch;
   height: 100%;
   background-size: cover;
 }
+
+.login-form{
+  
+  text-align: justify;
+  font-weight: 900;
+  color: white;
+  box-sizing: border-box;
+  background-image: inherit;
+  backdrop-filter: blur(10px); 
+
+}
+
+.Login{
+  background-image: url(../public/login.jpg);
+  background-size: cover;
+  
+ 
+}
+
+.box{
+  margin-left: 18rem;
+  margin-right: 18rem;
+  margin-bottom: 18rem;
+  margin-top: 2rem;
+  padding-left: 8rem;
+  padding-right: 8rem;
+  padding-bottom: 8rem;
+  padding-top: 8rem;
+ 
+  backdrop-filter: blur(10px);
+    /* margin-inline-start: 10rem;
+    margin-inline-end: 10rem; */
+
+}
