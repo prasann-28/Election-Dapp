@@ -113,7 +113,9 @@ export default class Login extends Component {
               <input type='password' placeholder="Password" value={this.state.password} onChange={event => this.setState({password: event.target.value})}/>
               </div>
               </div>
-             
+             <br/>
+             <br/>
+             <br/>
                   <button type="submit" className="ui button">Submit</button>
           </form>
           </div>
