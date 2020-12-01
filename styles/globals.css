@@ -73,7 +73,7 @@ padding-bottom: 2ch;
 }
 .intro{
   background-image: url(../public/vote.jpg);
-  background-size: cover;
+  /* background-size: cover; */
 }
 
 .admin{
@@ -124,7 +124,7 @@ padding-bottom: 2ch;
   padding-left: 8rem;
   padding-right: 8rem;
   padding-bottom: 8rem;
-  padding-top: 8rem;
+  padding-top: 4rem;
  
   backdrop-filter: blur(10px);
     /* margin-inline-start: 10rem;
