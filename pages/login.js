@@ -116,7 +116,12 @@ export default class Login extends Component {
              <br/>
              <br/>
              <br/>
-                  <button type="submit" className="ui button">Submit</button>
+                  <button className="ui animated button" type="submit">
+                    <div className="visible content">Login</div>
+                    <div className="hidden content">
+                      <i aria-hidden="true" class="arrow right icon">
+                        </i></div></button>
+                        
           </form>
           </div>
           

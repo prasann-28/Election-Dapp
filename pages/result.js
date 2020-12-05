@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import Web3 from 'web3'
 import Election from '../build/contracts/Election.json'
-import {Segment, Statistic, Progress } from 'semantic-ui-react'
+import {Segment, Statistic, Progress, Button,Form } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import 'next/router'
 
@@ -128,15 +128,16 @@ export default class Result extends Component{
 render() {
   return (
     <>
-    <Segment basic inverted padded='very' raised size='massive'>
+    <Segment basic inverted padded='very' raised size='huge' vertical>
             <h1><b>Result</b></h1></Segment>
-    <div style = {{paddingLeft: '45px', paddingTop: '35px',float:'left'}}>
+    <body className='result'>
+    <div style = {{paddingLeft: '75px', paddingTop: '35px',float:'left'}}>
     <div className="ui card"><div className="image"><img src={this.state.winnerImage}/></div><div className="content"><div className="header">{this.state.winner.name}</div><div><Statistic>
   <Statistic.Value>{this.state.winner.voteCount}/10</Statistic.Value>
     <Statistic.Label>Votes</Statistic.Label>
   </Statistic></div><div className="description">description</div></div></div>
     </div>
-    <div style = {{ paddingLeft: '500px', paddingRight: '250px'}}>
+    <div style = {{ paddingLeft: '500px', paddingRight: '250px',paddingTop:'35px'}}>
     <Segment inverted>
     <Progress percent={this.state.percentages[0]} inverted color='red' progress />
     <Progress percent={this.state.percentages[1]} inverted color='violet' progress />
@@ -144,6 +145,28 @@ render() {
     <Progress percent={this.state.percentages[3]} inverted color='blue' progress />
   </Segment>
 </div>
+<div style={{paddingTop: '50px',paddingLeft:'150px'}}>
+
+  <button className="ui red button" style={{marginRight: '4rem'}} >{this.state.candidate1.name}</button>
+  <button className="ui violet button" style={{marginRight: '4rem'}}>{this.state.candidate2.name}</button>
+  <button className="ui yellow button" style={{marginRight: '4rem'}}>{this.state.candidate3.name}</button>
+  <button className="ui blue button" >{this.state.candidate4.name}</button>
+ 
+</div>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+</body>
     </>
   )
 }

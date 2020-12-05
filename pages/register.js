@@ -6,7 +6,7 @@ import Election from '../build/contracts/Election.json'
 import { Button, Form, Segment, Input, TextArea, Select  } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import 'next/router'
-import FaceDetection from './api/camera.js'
+//import FaceDetection from './api/camera.js'
 
 // import Loading from './api/Loading'
 // import { render } from 'react-dom'
@@ -114,7 +114,7 @@ export default class Register extends Component {
         await this.state.election.methods.register(this.state.name).send({from: this.state.account})
        
         let status = await this.state.election.methods.voters(this.state.account).call({from: this.state.account})
-       // window.alert(status.exists)
+       window.alert(status.exists)
        let _id = status.id
        let pass = status.password
        
@@ -141,7 +141,7 @@ export default class Register extends Component {
             <h1><b>Register here to continue Voting</b></h1></Segment>
             <Form onSubmit={this.onSubmit}>
     <Form.Group widths='equal'>
-      <Form.Field
+      <Form.Field style={{paddingLeft:'6rem',paddingRight:'4rem'}}
         id='form-input-control-first-name'
         control={Input}
         label='First name'
@@ -150,7 +150,8 @@ export default class Register extends Component {
         onChange={event => {this.setState({firstName: event.target.value}) }}
         required
       />
-      <Form.Field
+      
+      <Form.Field style={{paddingRight: '6rem'}}
         id='form-input-control-last-name'
         control={Input}
         label='Last name'
@@ -159,6 +160,7 @@ export default class Register extends Component {
         onChange={event => {this.setState({lastName: event.target.value}) }}
         required
       />
+      </Form.Group>
       <Form.Field
         control={Select}
         options={genderOptions}
@@ -168,25 +170,24 @@ export default class Register extends Component {
         searchInput={{ id: 'form-select-control-gender' }}
         required
       />
-    </Form.Group>
-    {/* <Form.Field
-      id='form-textarea-control-opinion'
-      control={TextArea}
-      label='Opinion'
-      placeholder='Opinion'
-      required
-    /> */}
+      <Form.Group widths='equal'>
+     <Form.Field
+        id='form-input-control-last-name'
+        control={Input}
+        label='Registered Mobile Number'
+        placeholder='RMN'
+        value={this.state.mobileNumber}
+        {...console.log(this.state.mobileNumber)}
+        onChange={event => {this.setState({lastName: event.target.value}) }}
+        required
+      />
     <Form.Field
       id='form-input-control-error-email'
       control={Input}
       label='Email'
       placeholder='joe@schmoe.com'
-      error={{
-        content: 'Please enter a valid email address',
-        pointing: 'below',
-      }}
       required
-    />
+    /></Form.Group>
     <Form.Field 
       id='form-button-control-public'
         control={Button}

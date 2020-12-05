@@ -73,7 +73,7 @@ padding-bottom: 2ch;
 }
 .intro{
   background-image: url(../public/vote.jpg);
-  /* background-size: cover; */
+  background-size: cover;
 }
 
 .admin{
@@ -104,8 +104,8 @@ padding-bottom: 2ch;
   font-weight: 900;
   color: white;
   box-sizing: border-box;
-  background-image: inherit;
-  backdrop-filter: blur(10px); 
+  /* background-image: inherit; */
+  /* backdrop-filter: blur(10px);  */
 
 }
 
@@ -130,4 +130,9 @@ padding-bottom: 2ch;
     /* margin-inline-start: 10rem;
     margin-inline-end: 10rem; */
 
+}
+
+.result{
+  background-image: url(../public/result.jpg);
+  background-size: cover;
 }
