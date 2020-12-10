@@ -191,10 +191,10 @@ export default class Login extends Component {
         ></VoteCard>
         </div>
         <div style = {{paddingLeft: '40px',float: 'left'}}>
-        <VoteCard imgsrc ={this.state.url2} party='Republican' candidateAgenda='Fuck Stone Cold Steve Austin' candidateName={this.state.candidate2.name} onClick={() => this.onClick(this.state.candidate2.id)}></VoteCard>
+        <VoteCard imgsrc ={this.state.url2} party='Republican' candidateAgenda='Make America great again' candidateName={this.state.candidate2.name} onClick={() => this.onClick(this.state.candidate2.id)}></VoteCard>
         </div>
         <div style = {{paddingLeft: '40px',float: 'left'}}>
-        <VoteCard imgsrc ={this.state.url3} party='Other' candidateAgenda='No Shave November' candidateName={this.state.candidate3.name} onClick={() => this.onClick(this.state.candidate3.id)}></VoteCard>
+        <VoteCard imgsrc ={this.state.url3} party='Other' candidateAgenda='Mitron...' candidateName={this.state.candidate3.name} onClick={() => this.onClick(this.state.candidate3.id)}></VoteCard>
         </div>
         <div style = {{paddingLeft: '40px',float: 'left'}}>
         <VoteCard imgsrc ={this.state.url4} candidateParty='BSP' candidateAgenda='JSR' candidateName={this.state.candidate4.name} onClick={() => this.onClick(this.state.candidate4.id)}></VoteCard>

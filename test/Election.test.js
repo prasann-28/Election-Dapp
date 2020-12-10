@@ -54,7 +54,7 @@ contract('Election', () => {
         assert.equal(candidate2.name, 'NM')
         assert.equal(candidate3.name, 'AAP')
         
-        console.log(voter2.exists)
+       // console.log(voter2.exists)
     })
 
      it('lets voters set passwords', async () =>{
@@ -102,8 +102,8 @@ contract('Election', () => {
         const candidate2 = await election.candidates(2)
         const candidate3 = await election.candidates(3)
 
-        console.log(candidate1)
-        console.log(candidate2)
+        // console.log(candidate1)
+        // console.log(candidate2)
 
         assert(voter1.voted)
         assert(voter3.voted)

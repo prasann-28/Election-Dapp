@@ -46,19 +46,20 @@ export default class Result extends Component{
 
         console.log(candidate1)
         
-        let totalVoters = 10
+        let votersCount = await election.methods.votersCount().call({from: this.state.account})
         
         
-        let candidate1percent = (candidate1.voteCount/4)*100
-        let candidate2percent = (candidate2.voteCount/4)*100
-        let candidate3percent = (candidate3.voteCount/4)*100
-        let candidate4percent = (candidate4.voteCount/4)*100
+        let candidate1percent = (candidate1.voteCount/votersCount)*100
+        let candidate2percent = (candidate2.voteCount/votersCount)*100
+        let candidate3percent = (candidate3.voteCount/votersCount)*100
+        let candidate4percent = (candidate4.voteCount/votersCount)*100
 
         console.log(candidate1percent)
         console.log(candidate2percent)
         console.log(candidate3percent)
         console.log(candidate4percent)
-        
+
+        this.setState({votersCount: votersCount})
         this.setState({candidate1: candidate1})
         this.setState({candidate2: candidate2})
         this.setState({candidate3: candidate3})
@@ -113,7 +114,8 @@ export default class Result extends Component{
         candidate1: [],
           candidate2: [],
           candidate3: [],
-          candidate4: []
+          candidate4: [],
+          votersCount: 0
 
         
       }
@@ -133,9 +135,9 @@ render() {
     <body className='result'>
     <div style = {{paddingLeft: '75px', paddingTop: '35px',float:'left'}}>
     <div className="ui card"><div className="image"><img src={this.state.winnerImage}/></div><div className="content"><div className="header">{this.state.winner.name}</div><div><Statistic>
-  <Statistic.Value>{this.state.winner.voteCount}/10</Statistic.Value>
+  <Statistic.Value>{this.state.winner.voteCount}/{this.state.votersCount}</Statistic.Value>
     <Statistic.Label>Votes</Statistic.Label>
-  </Statistic></div><div className="description">description</div></div></div>
+  </Statistic></div><div className="description">Potato will be gold</div></div></div>
     </div>
     <div style = {{ paddingLeft: '500px', paddingRight: '250px',paddingTop:'35px'}}>
     <Segment inverted>

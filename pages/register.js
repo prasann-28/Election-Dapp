@@ -114,7 +114,6 @@ export default class Register extends Component {
         await this.state.election.methods.register(this.state.name).send({from: this.state.account})
        
         let status = await this.state.election.methods.voters(this.state.account).call({from: this.state.account})
-       window.alert(status.exists)
        let _id = status.id
        let pass = status.password
        
@@ -137,8 +136,11 @@ export default class Register extends Component {
         return (
           <>
           <Head><title>Register Page</title></Head>
-          <Segment basic inverted padded='very' raised size='massive'>
+          <Segment basic inverted padded='very' raised size='massive' vertical>
             <h1><b>Register here to continue Voting</b></h1></Segment>
+            <body className='register'>
+              <div > 
+              {/* If doesnt feel right remove className=box above */}
             <Form onSubmit={this.onSubmit}>
     <Form.Group widths='equal'>
       <Form.Field style={{paddingLeft:'6rem',paddingRight:'4rem'}}
@@ -161,7 +163,9 @@ export default class Register extends Component {
         required
       />
       </Form.Group>
-      <Form.Field
+      <Form.Group widths='equal' style={{paddingTop:'1rem'}}>
+     
+      <Form.Field style={{paddingLeft:'6rem',paddingRight:'4rem'}}
         control={Select}
         options={genderOptions}
         label={{ children: 'Gender', htmlFor: 'form-select-control-gender' }}
@@ -170,25 +174,40 @@ export default class Register extends Component {
         searchInput={{ id: 'form-select-control-gender' }}
         required
       />
-      <Form.Group widths='equal'>
-     <Form.Field
-        id='form-input-control-last-name'
+      <Form.Field style={{paddingLeft:'6rem',paddingRight:'4rem'}}
+        id='form-input-control-mobile-number'
+        type='text'
+        control={Input}
+        label='Adhaar Card'
+        placeholder='Adhaar ID'
+        value={this.state.mobileNumber}
+        {...console.log(this.state.mobileNumber)}
+        onChange={event => {this.setState({mobileNumber: event.target.value}) }}
+        required
+      />
+      
+      </Form.Group>
+      <Form.Group widths='equal' style={{paddingTop:'1rem'}}>
+     <Form.Field style={{paddingLeft:'6rem',paddingRight:'4rem'}}
+        id='form-input-control-mobile-number'
+        type='text'
         control={Input}
         label='Registered Mobile Number'
         placeholder='RMN'
         value={this.state.mobileNumber}
         {...console.log(this.state.mobileNumber)}
-        onChange={event => {this.setState({lastName: event.target.value}) }}
+        onChange={event => {this.setState({mobileNumber: event.target.value}) }}
         required
       />
-    <Form.Field
+    <Form.Field style={{paddingRight: '6rem'}}
       id='form-input-control-error-email'
+      type='email'
       control={Input}
       label='Email'
       placeholder='joe@schmoe.com'
       required
     /></Form.Group>
-    <Form.Field 
+    <Form.Field style={{paddingTop:'1rem'}}
       id='form-button-control-public'
         control={Button}
       content='Confirm'
@@ -196,6 +215,8 @@ export default class Register extends Component {
       required
     />
   </Form>
+  
+  </div><br/><br/><br/><br/><br/><br/><br/><br/></body>
     {/* <FaceDetection></FaceDetection> */}
           </>
         );
