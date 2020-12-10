@@ -17,28 +17,31 @@ contract('Election', () => {
     })
 
     it('can add a candidate', async () => {
-        await election.addCandidate(1,'RG',{from: accounts[0]})
+        await election.addCandidate(1,'RG',"INC","Potato is Gold",{from: accounts[0]})
         await election.uploadImage(1,'123','trump')
         const candidate1 = await election.candidates(1)
         assert.equal(candidate1.name, "RG")
         assert.equal(candidate1.voteCount, 0)
+        assert.equal(candidate1.party,"INC")
+        assert.equal(candidate1.agenda,"Potato is Gold")
     })
 
     it('can register single voter', async () => {
-        await election.register('Prakash',{from: accounts[1]})
+        await election.register('Prakash','Password',{from: accounts[1]})
         const voter1 = await election.voters(accounts[1])
         assert(voter1.exists)
         assert.equal(voter1.name, 'Prakash')
+        assert.equal(voter1.password,'Password')
         assert(!voter1.voted)
     })
 
     it('can register multiple candidates and voters', async () => {
-        await election.register('A',{from: accounts[2]})
-        await election.register('B',{from: accounts[3]})
+        await election.register('A','PasswordA',{from: accounts[2]})
+        await election.register('B','PasswordB',{from: accounts[3]})
 
-        await election.addCandidate(2,'NM',{from: accounts[0]})
+        await election.addCandidate(2,'NM','BJP','Mitron',{from: accounts[0]})
         await election.uploadImage(2,'123','trump')
-        await election.addCandidate(3,'AAP',{from: accounts[0]})
+        await election.addCandidate(3,'AK','AAP','Odd Even',{from: accounts[0]})
         await election.uploadImage(3,'123','trump')
 
         const voter2 = await election.voters(accounts[2])
@@ -49,11 +52,16 @@ contract('Election', () => {
 
        // assert.equal(voter1.name, 'Prakash')
         assert.equal(voter2.name, 'A')
+        assert.equal(voter2.password,'PasswordA')
         assert.equal(voter3.name, 'B')
+        assert.equal(voter3.password,'PasswordB')
 
         assert.equal(candidate2.name, 'NM')
-        assert.equal(candidate3.name, 'AAP')
-        
+        assert.equal(candidate2.party,'BJP')
+        assert.equal(candidate2.agenda,'Mitron')
+        assert.equal(candidate3.name, 'AK')
+        assert.equal(candidate3.party,'AAP')
+        assert.equal(candidate3.agenda,'Odd Even')
        // console.log(voter2.exists)
     })
 
@@ -147,7 +155,7 @@ contract('Election', () => {
 
         it('Only manager can add candidates', async () => {
             try{
-                await election.addCandidate(3, 'B',accounts[3], {from: accounts[1]})
+                await election.addCandidate(3, 'B','Party','Agenda', {from: accounts[1]})
                 assert(false)
             }
             catch (err){
@@ -163,7 +171,7 @@ contract('Election', () => {
         let imageCount
 
         beforeEach(async () => {
-            await election.addCandidate(4,'RG',{from: accounts[0]})
+            await election.addCandidate(4,'RG','INC','GOLD',{from: accounts[0]})
            
             result = await election.uploadImage(4,'abc123','biden',{from: accounts[0]})
             imageCount = await election.imageCount()

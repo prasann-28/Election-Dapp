@@ -24,6 +24,8 @@ contract Election {
         string name;
         uint voteCount;
         bool exists;
+        string party;
+        string agenda;
     }
 
     struct Image{
@@ -64,13 +66,15 @@ contract Election {
     }
 
     //manager adds candidates with default values
-    function addCandidate(uint _id, string memory _name) public restricted{
+    function addCandidate(uint _id, string memory _name, string memory _party, string memory _agenda) public restricted{
         require(!candidates[_id].exists);
         Candidate memory newCandidate = Candidate({
             name: _name,
             id: _id,
             voteCount: 0,
-            exists: true
+            exists: true,
+            party: _party,
+            agenda: _agenda
         });
 
         ++candidatesCount;
@@ -80,7 +84,7 @@ contract Election {
     }
     
     //manager adds voters with default values
-    function register(string memory _name) public {
+    function register(string memory _name, string memory _password) public {
         require(!voters[msg.sender].exists);
         
         Voter memory newVoter = Voter({
@@ -88,7 +92,7 @@ contract Election {
             voted: false,
             name: _name,
             id: 0,
-            password: 'dfault',
+            password: _password,
             authenticated: false
  
         });
@@ -105,7 +109,7 @@ contract Election {
         require(voters[msg.sender].exists);
         require(!voters[msg.sender].authenticated);
         //to check strings
-        require((keccak256(abi.encodePacked(voters[msg.sender].password)) == keccak256(abi.encodePacked('dfault'))));
+        //require((keccak256(abi.encodePacked(voters[msg.sender].password)) == keccak256(abi.encodePacked('dfault'))));
 
         voters[msg.sender].password = _pass;
     }

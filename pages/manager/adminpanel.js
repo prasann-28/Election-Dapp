@@ -97,14 +97,14 @@ export default class Admin extends Component {
         try{
           candidateNumber++
           window.alert(candidateNumber)
-          await this.state.election.methods.addCandidate(candidateNumber,candidateName).send({from: this.state.account})
+          await this.state.election.methods.addCandidate(candidateNumber,candidateName,this.state.party,this.state.agenda).send({from: this.state.account})
           await this.state.election.methods.uploadImage(candidateNumber,this.state.imghash, this.state.imgdescription).send({from: this.state.account})
           //window.alert(candidateNumber+1)
           let candidate = await this.state.election.methods.candidates(candidateNumber).call()
           //window.alert(candidateNumber+2)  
           this.setState({num: candidateNumber})
           //window.alert(candidateNumber+3)
-          console.log(candidate.id)
+          console.log(candidate)
           window.alert("Added successfully")
         }
         catch(err){
@@ -166,6 +166,7 @@ export default class Admin extends Component {
           head: 'Admin Panel',
           name: '',
           party: '',
+          agenda: '',
           open: false,
           num : 0,
           images: [],
@@ -232,7 +233,11 @@ export default class Admin extends Component {
     </Form.Field>
     <Form.Field>
       <label>Party</label>
-      <input placeholder='Party' value={Admin.party} onChange={event => this.setState({party: event.target.value})} required/>
+      <input placeholder='Party' value={this.state.party} onChange={event => this.setState({party: event.target.value})} required/>
+    </Form.Field>
+    <Form.Field>
+      <label>Agenda</label>
+      <input placeholder='Agenda' value={this.state.agenda} onChange={event => this.setState({agenda: event.target.value})} required/>
     </Form.Field>
     <Form.Field
         control={Select}

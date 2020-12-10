@@ -91,12 +91,12 @@ export default class Login extends Component {
           
 
           
-          // if(!voterid.authenticated){
-          //   window.alert("Login first")
-          //   window.location.href= "../login"
-          // }else{
-          //   this.setState({head: "Vote Here"})
-          // }
+          if(!voterid.authenticated){
+            window.alert("Login first")
+            window.location.href= "../login"
+          }else{
+            this.setState({head: "Vote Here"})
+          }
       } else {
         window.alert('Not deployed to network');
       }
@@ -156,6 +156,7 @@ export default class Login extends Component {
           let candidateVoted = await this.state.election.methods.candidates(candidateid).call()
           let voter = await this.state.election.methods.voters(this.state.account).call()
 
+          console.log(candidateVoted.id)
           console.log(candidateVoted.voteCount)
           console.log(voter.voted)
         }
@@ -187,17 +188,17 @@ export default class Login extends Component {
             </Segment>
         <div className='voting'>
         <div style = {{paddingLeft: '40px',float: 'left'}}>
-        <VoteCard imgsrc ={this.state.url1} party='INC' candidateAgenda='Potato is Gold' candidateName={this.state.candidate1.name} onClick={() => this.onClick(this.state.candidate1.id)}
+        <VoteCard imgsrc ={this.state.url1} party={this.state.candidate1.party} candidateAgenda={this.state.candidate1.agenda} candidateName={this.state.candidate1.name} onClick={() => this.onClick(this.state.candidate1.id)}
         ></VoteCard>
         </div>
         <div style = {{paddingLeft: '40px',float: 'left'}}>
-        <VoteCard imgsrc ={this.state.url2} party='Republican' candidateAgenda='Make America great again' candidateName={this.state.candidate2.name} onClick={() => this.onClick(this.state.candidate2.id)}></VoteCard>
+        <VoteCard imgsrc ={this.state.url2} party={this.state.candidate2.party} candidateAgenda={this.state.candidate2.agenda} candidateName={this.state.candidate2.name} onClick={() => this.onClick(this.state.candidate2.id)}></VoteCard>
         </div>
         <div style = {{paddingLeft: '40px',float: 'left'}}>
-        <VoteCard imgsrc ={this.state.url3} party='Other' candidateAgenda='Mitron...' candidateName={this.state.candidate3.name} onClick={() => this.onClick(this.state.candidate3.id)}></VoteCard>
+        <VoteCard imgsrc ={this.state.url3} party={this.state.candidate3.party} candidateAgenda={this.state.candidate3.agenda} candidateName={this.state.candidate3.name} onClick={() => this.onClick(this.state.candidate3.id)}></VoteCard>
         </div>
         <div style = {{paddingLeft: '40px',float: 'left'}}>
-        <VoteCard imgsrc ={this.state.url4} candidateParty='BSP' candidateAgenda='JSR' candidateName={this.state.candidate4.name} onClick={() => this.onClick(this.state.candidate4.id)}></VoteCard>
+        <VoteCard imgsrc ={this.state.url4} candidateParty={this.state.candidate4.party} candidateAgenda={this.state.candidate4.agenda} candidateName={this.state.candidate4.name} onClick={() => this.onClick(this.state.candidate4.id)}></VoteCard>
         </div>
         <br></br>
         <br></br>

@@ -19,8 +19,8 @@ class ImageUpload extends Component {
                 const description = this.imageDescription.value
                 this.props.uploadImage(description)
               }} >
-                <div className='ui input'>
-                <input type='file' accept=".jpg, .jpeg, .png, .bmp, .gif"  onChange={this.props.captureFile} /></div>
+                <div className='ui input' >
+                <input style={{marginRight:'2rem'}} type='file' accept=".jpg, .jpeg, .png, .bmp, .gif"  onChange={this.props.captureFile} /></div>
                   <div className="form-group mr-sm-2">
                     <br></br>
                       <input 

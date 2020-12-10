@@ -31,9 +31,18 @@ export default class Result extends Component{
         
         let manager = await election.methods.manager().call();
         this.setState({manager: manager})
+        
 
         let winner = await election.methods.winner().call();
         this.setState({winner: winner})
+        
+
+        
+
+        console.log(this.state.winner)
+        // if(winner.id ==0){
+        //   window.alert("Result not declared yet")
+        // }
         
         let winner_image = await election.methods.images(winner.id).call();
         let url = 'https://ipfs.infura.io/ipfs/'+ winner_image.imghash
@@ -44,20 +53,16 @@ export default class Result extends Component{
         let candidate3 = await election.methods.candidates(3).call()
         let candidate4 = await election.methods.candidates(4).call()
 
-        console.log(candidate1)
+       
         
         let votersCount = await election.methods.votersCount().call({from: this.state.account})
-        
         
         let candidate1percent = (candidate1.voteCount/votersCount)*100
         let candidate2percent = (candidate2.voteCount/votersCount)*100
         let candidate3percent = (candidate3.voteCount/votersCount)*100
         let candidate4percent = (candidate4.voteCount/votersCount)*100
 
-        console.log(candidate1percent)
-        console.log(candidate2percent)
-        console.log(candidate3percent)
-        console.log(candidate4percent)
+        
 
         this.setState({votersCount: votersCount})
         this.setState({candidate1: candidate1})
@@ -76,7 +81,7 @@ export default class Result extends Component{
         }
 
         this.setState({winnerPercent: percentages[max]})
-        console.log(percentages[max])
+        
         
     } else {
       window.alert('Not deployed to network');
@@ -137,7 +142,7 @@ render() {
     <div className="ui card"><div className="image"><img src={this.state.winnerImage}/></div><div className="content"><div className="header">{this.state.winner.name}</div><div><Statistic>
   <Statistic.Value>{this.state.winner.voteCount}/{this.state.votersCount}</Statistic.Value>
     <Statistic.Label>Votes</Statistic.Label>
-  </Statistic></div><div className="description">Potato will be gold</div></div></div>
+  </Statistic></div><div className="description">{this.state.winner.agenda}</div></div></div>
     </div>
     <div style = {{ paddingLeft: '500px', paddingRight: '250px',paddingTop:'35px'}}>
     <Segment inverted>

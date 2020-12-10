@@ -111,7 +111,14 @@ export default class Register extends Component {
 
         this.setState({name: _name})
 
-        await this.state.election.methods.register(this.state.name).send({from: this.state.account})
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < 5; i++ ) {
+           result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        result = result.toString()
+        await this.state.election.methods.register(this.state.name, result).send({from: this.state.account})
        
         let status = await this.state.election.methods.voters(this.state.account).call({from: this.state.account})
        let _id = status.id

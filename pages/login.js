@@ -30,6 +30,8 @@ export default class Login extends Component {
           
           let manager = await election.methods.manager().call();
           this.setState({manager})
+          let vot = await this.state.election.methods.voters(this.state.account).call()
+          console.log(vot)
       } else {
         window.alert('Not deployed to network');
       }
@@ -119,7 +121,7 @@ export default class Login extends Component {
                   <button className="ui animated button" type="submit">
                     <div className="visible content">Login</div>
                     <div className="hidden content">
-                      <i aria-hidden="true" class="arrow right icon">
+                      <i aria-hidden="true" className="arrow right icon">
                         </i></div></button>
                         
           </form>
