@@ -1,37 +1,28 @@
 import Head from 'next/head'
 import React, { Component } from 'react'
 import Web3 from 'web3'
+import firebase from './firebase'
 //import Link from 'next/link'
 import Election from '../build/contracts/Election.json'
 import { Button, Form, Segment, Input, TextArea, Select  } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import 'next/router'
 //import FaceDetection from './api/camera.js'
-
 // import Loading from './api/Loading'
 // import { render } from 'react-dom'
 //Declare IPFS
 const ipfsClient = require('ipfs-api')
 const ipfs = new ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' }) // leaving out the arguments will default to these values
-
-
 const genderOptions = [
   { key: 'm', text: 'Male', value: 'male' },
   { key: 'f', text: 'Female', value: 'female' },
   { key: 'o', text: 'Other', value: 'other' },
 ]
-
 export default class Register extends Component {
-  
-  
-  
   async componentDidMount() {
       await this.loadWeb3()
         await this.loadBlockchainData()
-      }
-      
-
-      
+      }          
       async loadBlockchainData() {
         const web3 = window.web3;
     
@@ -70,7 +61,6 @@ export default class Register extends Component {
         }
       }
       
-
       captureFile = event => {
 
         event.preventDefault()
@@ -84,7 +74,32 @@ export default class Register extends Component {
           console.log('buffer ', this.state.buffer)
         }
       }
-
+      handleClick=()=>{
+        var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
+        var number = '+918400788884';
+        firebase.auth().signInWithPhoneNumber(number, recaptcha).then( function(e) {
+          var code = prompt('Enter the otp', '');
+    
+            
+            if(code === null) return;
+    
+            
+            e.confirm(code).then(function (result) {
+                console.log(result.user);
+    
+                document.querySelector('label').textContent +=   result.user.phoneNumber + "Number verified";
+                
+            }).catch(function (error) {
+                console.error( error);
+                
+            });
+    
+        })
+        .catch(function (error) {
+            console.error( error);
+    
+        });
+      }
       
       constructor(props) {
         super(props)
@@ -170,9 +185,8 @@ export default class Register extends Component {
         required
       />
       </Form.Group>
-      <Form.Group widths='equal' style={{paddingTop:'1rem'}}>
-     
-      <Form.Field style={{paddingLeft:'6rem',paddingRight:'4rem'}}
+      <Form.Group widths='equal' style={{paddingTop:'1rem', paddingRight: '270px'}}>
+      <Form.Field style={{left:'80px'}}
         control={Select}
         options={genderOptions}
         label={{ children: 'Gender', htmlFor: 'form-select-control-gender' }}
@@ -181,7 +195,7 @@ export default class Register extends Component {
         searchInput={{ id: 'form-select-control-gender' }}
         required
       />
-      <Form.Field style={{paddingLeft:'6rem',paddingRight:'4rem'}}
+      <Form.Field style={{paddingLeft:'10rem',paddingRight:'1rem'}}
         id='form-input-control-mobile-number'
         type='text'
         control={Input}
@@ -222,7 +236,13 @@ export default class Register extends Component {
       required
     />
   </Form>
-  
+  <div>
+           <label></label>
+        
+        <div id="recaptcha"></div>
+
+        <button onClick={this.handleClick}>Click</button>
+      </div>
   </div><br/><br/><br/><br/><br/><br/><br/><br/></body>
     {/* <FaceDetection></FaceDetection> */}
           </>
