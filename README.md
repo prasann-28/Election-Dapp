@@ -1,2 +1,1 @@
-# Election DApp
-made using truffle, ganache and react 
+# prasann-28.Election-DApp
