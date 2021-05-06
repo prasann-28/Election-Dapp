@@ -4,12 +4,12 @@ import Web3 from 'web3'
 import firebase from './fbase'
 //import Link from 'next/link'
 import Election from '../build/contracts/Election.json'
-import { Button, Form, Segment, Input, TextArea, Select  } from 'semantic-ui-react'
+import { Button, Form, Segment, Input, TextArea, Select, Header  } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import 'next/router'
 //import FaceDetection from './api/camera.js'
-// import Loading from './api/Loading'
-// import { render } from 'react-dom'
+import Loading from './api/Loading'
+import { render } from 'react-dom'
 //Declare IPFS
 const ipfsClient = require('ipfs-api')
 const ipfs = new ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' }) // leaving out the arguments will default to these values
@@ -159,9 +159,10 @@ export default class Register extends Component {
           <>
           <Head><title>Register Page</title></Head>
           <Segment basic inverted padded='very' raised size='massive' vertical>
-            <h1><b>Register here to continue Voting</b></h1></Segment>
+            <Header as='h1'>Register here to continue Voting</Header>
+            </Segment>
             <body className='register'>
-              <div > 
+              <div style={{paddingTop:'2rem'}}> 
               {/* If doesnt feel right remove className=box above */}
             <Form onSubmit={this.onSubmit}>
     <Form.Group widths='equal'>
@@ -185,8 +186,8 @@ export default class Register extends Component {
         required
       />
       </Form.Group>
-      <Form.Group widths='equal' style={{paddingTop:'1rem', paddingRight: '270px'}}>
-      <Form.Field style={{left:'80px'}}
+      <Form.Group widths='equal' style={{paddingTop:'1rem'}} className='genderadhaar-form'>
+      <Form.Field style={{paddingLeft:'6rem',paddingRight:'4rem'}}
         control={Select}
         options={genderOptions}
         label={{ children: 'Gender', htmlFor: 'form-select-control-gender' }}
@@ -195,8 +196,8 @@ export default class Register extends Component {
         searchInput={{ id: 'form-select-control-gender' }}
         required
       />
-      <Form.Field style={{paddingLeft:'10rem',paddingRight:'1rem'}}
-        id='form-input-control-mobile-number'
+      <Form.Field style={{paddingLeft:'4rem'}}
+        id='form-input-control-adhaar'
         type='text'
         control={Input}
         label='Adhaar Card'
@@ -228,21 +229,22 @@ export default class Register extends Component {
       placeholder='joe@schmoe.com'
       required
     /></Form.Group>
+    <div style={{paddingTop:'3rem'}}>
     <Form.Field style={{paddingTop:'1rem'}}
       id='form-button-control-public'
         control={Button}
       content='Confirm'
       label='Register'
       required
-    />
+    /></div>
   </Form>
   <div>
            <label></label>
         
-        <div id="recaptcha"></div>
-
-        <button onClick={this.handleClick}>Click</button>
-      </div>
+        <div id="recaptcha" style={{paddingTop:'2rem',paddingLeft:'40rem'}}></div>
+          <div style={{paddingTop:'2rem'}}>
+        <Button onClick={this.handleClick}>Get Your OTP</Button>
+      </div></div>
   </div><br/><br/><br/><br/><br/><br/><br/><br/></body>
     {/* <FaceDetection></FaceDetection> */}
           </>

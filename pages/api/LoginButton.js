@@ -6,7 +6,7 @@ import 'semantic-ui-css/semantic.min.css';
 
 const LoginButton = () => (
   <div >
-    <div style={{float: "left", paddingLeft: '28rem'}}>
+    <div style={{float: "left", paddingLeft: '28rem', paddingTop: '10em', paddingBottom:'20rem', backgroundImage:'inherit'}}>
     <Button animated='fade' size='huge'>
       <Button.Content visible className='intro-button'>Login</Button.Content>
       <Button.Content hidden>
@@ -14,13 +14,16 @@ const LoginButton = () => (
         <Icon name='arrow right' />
         </Link>
       </Button.Content>
-    </Button></div><div style={{float: "right", paddingRight:'28rem'}}>
+    </Button>
+    </div>
+    <div style={{float: "right", paddingRight:'28rem', paddingTop: '10rem', paddingBottom:'32rem', backgroundImage:'inherit'}}>
     <Button animated='fade' size='huge'>
       <Button.Content visible className='intro-button' >Register your account</Button.Content>
       <Button.Content hidden>
       <Link href='../register'><Icon name='chevron circle right' /></Link>
       </Button.Content>
-    </Button></div>
+    </Button>
+    </div>
   </div>
 )
 

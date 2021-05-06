@@ -13,32 +13,7 @@ export default function Home() {
     <div className='Home'><EHeader /></div>
    <body className='intro'>
      {/* <ContainerExampleText/> */}
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
     <LoginButton/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
    </body>
    </>
   )

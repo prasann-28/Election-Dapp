@@ -96,7 +96,7 @@ padding-bottom: 2ch;
   background-position: center;
  
   background-size: 100%;
-  padding-top: 2rem;
+  /* padding-top: 2rem; */
 }
 
 .login-form{
@@ -136,4 +136,14 @@ padding-bottom: 2ch;
 .result{
   background-image: url(../public/result.jpg);
   background-size: cover;
+}
+
+.genderadhaar-form{
+  
+  padding-right: 6rem;
+  padding-left: 6rem;
+}
+
+.gender-form{
+  width: 2rem;
 }
