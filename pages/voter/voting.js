@@ -150,7 +150,7 @@ export default class Login extends Component {
 
           // }
           
-          window.alert(cdid)
+          // window.alert(cdid)
           let candidateid = cdid
           await this.state.election.methods.vote(cdid).send({from: this.state.account})
           let candidateVoted = await this.state.election.methods.candidates(candidateid).call()
@@ -159,6 +159,8 @@ export default class Login extends Component {
           console.log(candidateVoted.id)
           console.log(candidateVoted.voteCount)
           console.log(voter.voted)
+
+          window.alert('Voted Successfully')
         }
         catch(err){
           window.alert("Error Voting, have you voted before?")

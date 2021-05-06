@@ -48,7 +48,7 @@ export default class Admin extends Component {
 
           let candnum = await election.methods.candidatesCount().call()
           this.setState({num: candnum})
-          window.alert('Number of Candidates:'+candnum)
+          // window.alert('Number of Candidates:'+candnum)
 
           
           let votesCast = await election.methods.votesCast().call()
@@ -95,8 +95,8 @@ export default class Admin extends Component {
         // window.alert("Oh my GOD Rahul Gandhi v2")
         let candidateName = this.state.name
         try{
-          candidateNumber++
-          window.alert(candidateNumber)
+          candidateNumber ++
+          // window.alert(candidateNumber)
           await this.state.election.methods.addCandidate(candidateNumber,candidateName,this.state.party,this.state.agenda).send({from: this.state.account})
           await this.state.election.methods.uploadImage(candidateNumber,this.state.imghash, this.state.imgdescription).send({from: this.state.account})
           //window.alert(candidateNumber+1)
@@ -106,9 +106,10 @@ export default class Admin extends Component {
           //window.alert(candidateNumber+3)
           console.log(candidate)
           window.alert("Added successfully")
+          window.location.reload()
         }
         catch(err){
-          window.alert("Couldnt add candidate")
+          window.alert("Couldn't add candidate")
         }
       }
             
@@ -150,6 +151,8 @@ export default class Admin extends Component {
           let winner_var = await this.state.election.methods.winner().call({from: this.state.account})
           this.setState({winner: winner_var})
           console.log(this.state.winner) 
+          window.alert('Declared the winner, redirecting to result')
+          window.location.href = '../result'
         }
         catch(err){
           window.alert("Could not declare winner, try again")

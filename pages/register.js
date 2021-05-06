@@ -78,10 +78,12 @@ export default class Register extends Component {
         var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
         var number = '+91' + this.state.mobileNumber;
         firebase.auth().signInWithPhoneNumber(number, recaptcha).then( function(e) {
-          var code = prompt('Enter the otp', '');
+          var code = prompt('Enter the OTP: ', '');
     
             
-            if(code === null) return;
+            if(code === null) {
+              window.alert('err')
+            };
     
             
             e.confirm(code).then(function (result) {
