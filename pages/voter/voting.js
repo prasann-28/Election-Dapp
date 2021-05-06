@@ -161,7 +161,7 @@ export default class Login extends Component {
           console.log(voter.voted)
         }
         catch(err){
-          window.alert("could not vote")
+          window.alert("Error Voting, have you voted before?")
         }
 
        
@@ -198,7 +198,7 @@ export default class Login extends Component {
         <VoteCard imgsrc ={this.state.url3} party={this.state.candidate3.party} candidateAgenda={this.state.candidate3.agenda} candidateName={this.state.candidate3.name} onClick={() => this.onClick(this.state.candidate3.id)}></VoteCard>
         </div>
         <div style = {{paddingLeft: '40px',float: 'left'}}>
-        <VoteCard imgsrc ={this.state.url4} candidateParty={this.state.candidate4.party} candidateAgenda={this.state.candidate4.agenda} candidateName={this.state.candidate4.name} onClick={() => this.onClick(this.state.candidate4.id)}></VoteCard>
+        <VoteCard imgsrc ={this.state.url4} party={this.state.candidate4.party} candidateAgenda={this.state.candidate4.agenda} candidateName={this.state.candidate4.name} onClick={() => this.onClick(this.state.candidate4.id)}></VoteCard>
         </div>
         <br></br>
         <br></br>
@@ -225,7 +225,7 @@ export default class Login extends Component {
         <br></br>
         <br></br>
         <br></br>
-        <br></br>
+        <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
 
         </div>
                </>

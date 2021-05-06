@@ -48,7 +48,7 @@ export default class Admin extends Component {
 
           let candnum = await election.methods.candidatesCount().call()
           this.setState({num: candnum})
-          window.alert(candnum)
+          window.alert('Number of Candidates:'+candnum)
 
           
           let votesCast = await election.methods.votesCast().call()
@@ -281,21 +281,34 @@ export default class Admin extends Component {
             <br/>
             <br/>
 
-            <div style={{ marginLeft:'20rem', marginRight:'20rem'}}>
+            <div style={{ marginLeft:'20rem', marginRight:'20rem', paddingTop:'2rem'}}>
             <Statistic>
     <Statistic.Value>{this.state.votesCast}</Statistic.Value>
     <Statistic.Label>Votes</Statistic.Label>
           <Statistic.Value>{this.state.remainingCount}</Statistic.Value>
     <Statistic.Label>Remaining</Statistic.Label>
+    <Statistic.Value>{this.state.num}</Statistic.Value>
+    <Statistic.Label>Number of Candidates</Statistic.Label>
   </Statistic>
 
             </div>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
             <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            
+            
+            
+            
        </div>
            
           </>

@@ -87,8 +87,8 @@ export default class Register extends Component {
             e.confirm(code).then(function (result) {
                 console.log(result.user);
     
-                document.querySelector('label').textContent +=   result.user.phoneNumber + "Number verified";
-                
+                // document.querySelector('label').textContent +=   result.user.phoneNumber + "Number verified";
+                window.alert(result.user.phoneNumber+'Verified')
             }).catch(function (error) {
                 console.error( error);
                 
@@ -141,8 +141,8 @@ export default class Register extends Component {
        
        this.setState({id: _id, password: pass})
         if (status.exists) {
-          window.alert(this.state.id)
-          window.alert(this.state.password)
+          window.alert('ID for Login Page: ' + this.state.id)
+          window.alert('Password for Login Page: ' + this.state.password)
           window.location.href = "./login"
         }
         else{
