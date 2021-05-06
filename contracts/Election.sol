@@ -139,7 +139,7 @@ contract Election {
     //only manager declares the winner
     function finalizeResult() public restricted {
         uint maxIndex = 1;
-        for (uint i = 1; i < candidatesCount; i++) {
+        for (uint i = 0; i < candidatesCount; i++) {
             if(candidates[i].voteCount > candidates[maxIndex].voteCount){
                 maxIndex = i;
             }    

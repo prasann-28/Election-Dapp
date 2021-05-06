@@ -45,6 +45,7 @@ export default class Result extends Component{
         // }
         
         let winner_image = await election.methods.images(winner.id).call();
+        console.log(winner_image)
         let url = 'https://ipfs.infura.io/ipfs/'+ winner_image.imghash
         this.setState({winnerImage: url})
 
