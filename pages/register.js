@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React, { Component } from 'react'
 import Web3 from 'web3'
-import firebase from './firebase'
+import firebase from './fbase'
 //import Link from 'next/link'
 import Election from '../build/contracts/Election.json'
 import { Button, Form, Segment, Input, TextArea, Select  } from 'semantic-ui-react'
@@ -76,7 +76,7 @@ export default class Register extends Component {
       }
       handleClick=()=>{
         var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
-        var number = '+91XXXXXXXXXX';
+        var number = '+91' + this.state.mobileNumber;
         firebase.auth().signInWithPhoneNumber(number, recaptcha).then( function(e) {
           var code = prompt('Enter the otp', '');
     
@@ -201,9 +201,9 @@ export default class Register extends Component {
         control={Input}
         label='Adhaar Card'
         placeholder='Adhaar ID'
-        value={this.state.mobileNumber}
-        {...console.log(this.state.mobileNumber)}
-        onChange={event => {this.setState({mobileNumber: event.target.value}) }}
+        value={this.state.aadhar}
+        {...console.log(this.state.aadhar)}
+        onChange={event => {this.setState({aadharID: event.target.value}) }}
         required
       />
       
