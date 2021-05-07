@@ -286,12 +286,12 @@ export default class Admin extends Component {
 
             <div style={{ marginLeft:'20rem', marginRight:'20rem', paddingTop:'2rem'}}>
             <Statistic>
-    <Statistic.Value>{this.state.votesCast}</Statistic.Value>
-    <Statistic.Label>Votes</Statistic.Label>
-          <Statistic.Value>{this.state.remainingCount}</Statistic.Value>
-    <Statistic.Label>Remaining</Statistic.Label>
-    <Statistic.Value>{this.state.num}</Statistic.Value>
-    <Statistic.Label>Number of Candidates</Statistic.Label>
+        <Statistic.Value><mark>{this.state.votesCast}</mark></Statistic.Value>
+    <Statistic.Label><mark>Votes</mark></Statistic.Label>
+          <Statistic.Value><mark>{this.state.remainingCount}</mark></Statistic.Value>
+    <Statistic.Label><mark>Remaining</mark></Statistic.Label>
+    <Statistic.Value><mark>{this.state.num}</mark></Statistic.Value>
+    <Statistic.Label><mark>Number of Candidates</mark></Statistic.Label>
   </Statistic>
 
             </div>
